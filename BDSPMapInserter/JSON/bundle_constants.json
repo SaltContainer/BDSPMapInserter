@@ -1,0 +1,152 @@
+{
+	"script-data": {
+		"key": "script-data",
+		"file_name": "ev_script",
+		"full_path": "Data\\StreamingAssets\\AssetAssistant\\Dpr\\ev_script",
+		"cab_directory": "CAB-e856180fe48cd419c06715341f9e3f42",
+		"files": [
+			"debug"
+		]
+	},
+	"dpr-masterdatas": {
+		"key": "dpr-masterdatas",
+		"file_name": "masterdatas",
+		"full_path": "Data\\StreamingAssets\\AssetAssistant\\Dpr\\masterdatas",
+		"cab_directory": "CAB-9dc85906fd5b2461ef3e4f7cfebad93c",
+		"files": [
+			"MapWarp_A01",
+			"PlaceData_A01",
+			"StopData_A01"
+		]
+	},
+	"gamesettings": {
+		"key": "gamesettings",
+		"file_name": "gamesettings",
+		"full_path": "Data\\StreamingAssets\\AssetAssistant\\Dpr\\scriptableobjects\\gamesettings",
+		"cab_directory": "CAB-622a63349ae1e87f40fc5a6ca513dba4",
+		"files": [
+			"map00_22",
+			"map00_22_Ex"
+		]
+	},
+	"message-en": {
+		"key": "message-en",
+		"file_name": "english",
+		"full_path": "Data\\StreamingAssets\\AssetAssistant\\Message\\english",
+		"cab_directory": "CAB-04349cbe384fde3b000efa8f5e312a69",
+		"files": [
+			"english_dp_fld_areaname",
+			"english_dp_fld_areaname_display",
+			"english_dp_fld_areaname_indirect",
+			"english_dp_fld_areaname_townmap"
+		]
+	},
+	"message-fr": {
+		"key": "message-fr",
+		"file_name": "french",
+		"full_path": "Data\\StreamingAssets\\AssetAssistant\\Message\\french",
+		"cab_directory": "CAB-2d5ca6b251b32b0b5786a94ab37e50ba",
+		"files": [
+			"french_dp_fld_areaname",
+			"french_dp_fld_areaname_display",
+			"french_dp_fld_areaname_indirect",
+			"french_dp_fld_areaname_townmap"
+		]
+	},
+	"message-de": {
+		"key": "message-de",
+		"file_name": "german",
+		"full_path": "Data\\StreamingAssets\\AssetAssistant\\Message\\german",
+		"cab_directory": "CAB-714a79d56130fca39b99af46071d9205",
+		"files": [
+			"german_dp_fld_areaname",
+			"german_dp_fld_areaname_display",
+			"german_dp_fld_areaname_indirect",
+			"german_dp_fld_areaname_townmap"
+		]
+	},
+	"message-it": {
+		"key": "message-it",
+		"file_name": "italian",
+		"full_path": "Data\\StreamingAssets\\AssetAssistant\\Message\\italian",
+		"cab_directory": "CAB-60c04e5ffccd8794b7871936e4624b2e",
+		"files": [
+			"italian_dp_fld_areaname",
+			"italian_dp_fld_areaname_display",
+			"italian_dp_fld_areaname_indirect",
+			"italian_dp_fld_areaname_townmap"
+		]
+	},
+	"message-ja": {
+		"key": "message-ja",
+		"file_name": "jpn",
+		"full_path": "Data\\StreamingAssets\\AssetAssistant\\Message\\jpn",
+		"cab_directory": "CAB-8d5c016c94591dcfac3b9e315d7e8fa5",
+		"files": [
+			"jpn_dp_fld_areaname",
+			"jpn_dp_fld_areaname_display",
+			"jpn_dp_fld_areaname_indirect",
+			"jpn_dp_fld_areaname_townmap"
+		]
+	},
+	"message-ja-k": {
+		"key": "message-ja-k",
+		"file_name": "jpn_kanji",
+		"full_path": "Data\\StreamingAssets\\AssetAssistant\\Message\\jpn_kanji",
+		"cab_directory": "CAB-20f4d7c7c1d80cbde94a1b451298e9f2",
+		"files": [
+			"jpn_kanji_dp_fld_areaname",
+			"jpn_kanji_dp_fld_areaname_display",
+			"jpn_kanji_dp_fld_areaname_indirect",
+			"jpn_kanji_dp_fld_areaname_townmap"
+		]
+	},
+	"message-ko": {
+		"key": "message-ko",
+		"file_name": "korean",
+		"full_path": "Data\\StreamingAssets\\AssetAssistant\\Message\\korean",
+		"cab_directory": "CAB-6d7a07b4761e098d9bdc3d49349ef9a8",
+		"files": [
+			"korean_dp_fld_areaname",
+			"korean_dp_fld_areaname_display",
+			"korean_dp_fld_areaname_indirect",
+			"korean_dp_fld_areaname_townmap"
+		]
+	},
+	"message-zh-s": {
+		"key": "message-zh-s",
+		"file_name": "simp_chinese",
+		"full_path": "Data\\StreamingAssets\\AssetAssistant\\Message\\simp_chinese",
+		"cab_directory": "CAB-ce9f4322dd5628c2f2684bdb6cf251bc",
+		"files": [
+			"simp_chinese_dp_fld_areaname",
+			"simp_chinese_dp_fld_areaname_display",
+			"simp_chinese_dp_fld_areaname_indirect",
+			"simp_chinese_dp_fld_areaname_townmap"
+		]
+	},
+	"message-es": {
+		"key": "message-es",
+		"file_name": "spanish",
+		"full_path": "Data\\StreamingAssets\\AssetAssistant\\Message\\spanish",
+		"cab_directory": "CAB-e4369ada45474d8d576cbea79b55afee",
+		"files": [
+			"spanish_dp_fld_areaname",
+			"spanish_dp_fld_areaname_display",
+			"spanish_dp_fld_areaname_indirect",
+			"spanish_dp_fld_areaname_townmap"
+		]
+	},
+	"message-zh-t": {
+		"key": "message-zh-t",
+		"file_name": "trad_chinese",
+		"full_path": "Data\\StreamingAssets\\AssetAssistant\\Message\\trad_chinese",
+		"cab_directory": "CAB-6dee1bce1a4a20079166fd65b3281265",
+		"files": [
+			"trad_chinese_dp_fld_areaname",
+			"trad_chinese_dp_fld_areaname_display",
+			"trad_chinese_dp_fld_areaname_indirect",
+			"trad_chinese_dp_fld_areaname_townmap"
+		]
+	}
+}

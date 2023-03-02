@@ -33,6 +33,27 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AssetsTools.NET, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\AssetsTools.NET.2.0.12\lib\net40\AssetsTools.NET.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAPICodePack, Version=1.1.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WindowsAPICodePack-Core.1.1.2\lib\Microsoft.WindowsAPICodePack.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil, Version=0.10.4.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mono.Cecil.0.10.4\lib\net40\Mono.Cecil.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil.Mdb, Version=0.10.4.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mono.Cecil.0.10.4\lib\net40\Mono.Cecil.Mdb.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil.Pdb, Version=0.10.4.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mono.Cecil.0.10.4\lib\net40\Mono.Cecil.Pdb.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil.Rocks, Version=0.10.4.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mono.Cecil.0.10.4\lib\net40\Mono.Cecil.Rocks.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -46,11 +67,33 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form1.cs">
+    <Compile Include="Data\BundleDecompressor.cs" />
+    <Compile Include="Data\BundleManipulator.cs" />
+    <Compile Include="Data\Bundles\Bundle.cs" />
+    <Compile Include="Data\Bundles\GameSettingsBundle.cs" />
+    <Compile Include="Data\Bundles\MasterDatasBundle.cs" />
+    <Compile Include="Data\Bundles\ScriptBundle.cs" />
+    <Compile Include="Data\JSONObjects\Bundle\BundleInfo.cs" />
+    <Compile Include="Data\JSONObjects\Maps\ZoneInfo.cs" />
+    <Compile Include="Data\Utils\FileConstants.cs" />
+    <Compile Include="Engine\MainEngine.cs" />
+    <Compile Include="Engine\MapEditor\MapEditorEngine.cs" />
+    <Compile Include="Engine\MapEditor\Model\MasterDatas\MasterDatasFile.cs" />
+    <Compile Include="Engine\MessageEditor\MessageEditorEngine.cs" />
+    <Compile Include="Engine\MessageEditor\Model\MessageFile.cs" />
+    <Compile Include="Engine\MessageEditor\Model\MessageLabel.cs" />
+    <Compile Include="Engine\MessageEditor\Model\Word.cs" />
+    <Compile Include="Engine\ScriptEditor\Model\Argument.cs" />
+    <Compile Include="Engine\ScriptEditor\Model\ArgumentType.cs" />
+    <Compile Include="Engine\ScriptEditor\Model\Command.cs" />
+    <Compile Include="Engine\ScriptEditor\Model\Script.cs" />
+    <Compile Include="Engine\ScriptEditor\Model\ScriptFile.cs" />
+    <Compile Include="Engine\ScriptEditor\ScriptEditorEngine.cs" />
+    <Compile Include="UI\Forms\FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="UI\Forms\FormMain.Designer.cs">
+      <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -62,7 +105,15 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="UI\Forms\FormMain.resx">
+      <DependentUpon>FormMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="JSON\area_id.json" />
+    <None Include="JSON\bundle_constants.json" />
+    <None Include="JSON\zone_id.json" />
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -75,6 +126,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Engine\MapEditor\Model\GameSettings\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
