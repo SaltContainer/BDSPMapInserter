@@ -170,5 +170,11 @@ namespace BDSPMapInserter.Data
                 return false;
             }
         }
+
+        public static Bundle GetBundle(string bundleKey)
+        {
+            if (IsBundleLoaded(bundleKey)) return bundles[bundleKey];
+            else return null;
+        }
     }
 }

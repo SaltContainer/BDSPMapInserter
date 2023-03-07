@@ -15,21 +15,14 @@ namespace BDSPMapInserter.Data.Bundles
 
         protected override AssetsReplacer GenerateReplacerAtFile(AssetTypeValueField baseField, JObject jfile)
         {
+            // TODO: Add missing values
             AssetFileInfoEx fileInfo = assetsFile.table.GetAssetInfo(jfile["PathID"].Value<long>());
 
             baseField["m_Name"].GetValue().Set(jfile["FileName"].ToString());
 
             JArray jscripts = (JArray)jfile["Scripts"];
             var scriptArray = baseField["Scripts"]["Array"];
-
-            if (jscripts.Count <= scriptArray.childrenCount) scriptArray.SetChildrenList(scriptArray.children.Take(jscripts.Count).ToArray());
-            else
-            {
-                List<AssetTypeValueField> extra = new List<AssetTypeValueField>();
-                for (int i = scriptArray.childrenCount; i < jscripts.Count; i++) extra.Add(ValueBuilder.DefaultValueFieldFromArrayTemplate(scriptArray));
-                scriptArray.SetChildrenList(scriptArray.children.Concat(extra).ToArray());
-            }
-
+            AdjustArrayLength(jscripts, scriptArray);
             for (int i = 0; i < jscripts.Count; i++)
             {
                 JToken jscript = jscripts[i];
@@ -37,30 +30,14 @@ namespace BDSPMapInserter.Data.Bundles
 
                 JArray jcommands = (JArray)jscript["Commands"];
                 var commandArray = baseField["Scripts"][0][i]["Commands"]["Array"];
-
-                if (jcommands.Count <= commandArray.childrenCount) commandArray.SetChildrenList(commandArray.children.Take(jcommands.Count).ToArray());
-                else
-                {
-                    List<AssetTypeValueField> extra = new List<AssetTypeValueField>();
-                    for (int j = commandArray.childrenCount; j < jcommands.Count; j++) extra.Add(ValueBuilder.DefaultValueFieldFromArrayTemplate(commandArray));
-                    commandArray.SetChildrenList(commandArray.children.Concat(extra).ToArray());
-                }
-
+                AdjustArrayLength(jcommands, commandArray);
                 for (int j = 0; j < jcommands.Count; j++)
                 {
                     JToken jcommand = jcommands[j];
 
                     JArray jargs = (JArray)jcommand["Arg"];
                     var argArray = baseField["Scripts"][0][i]["Commands"][0][j]["Arg"]["Array"];
-
-                    if (jargs.Count <= argArray.childrenCount) argArray.SetChildrenList(argArray.children.Take(jargs.Count).ToArray());
-                    else
-                    {
-                        List<AssetTypeValueField> extra = new List<AssetTypeValueField>();
-                        for (int k = argArray.childrenCount; k < jargs.Count; k++) extra.Add(ValueBuilder.DefaultValueFieldFromArrayTemplate(argArray));
-                        argArray.SetChildrenList(argArray.children.Concat(extra).ToArray());
-                    }
-
+                    AdjustArrayLength(jargs, argArray);
                     for (int k = 0; k < jargs.Count; k++)
                     {
                         JToken jarg = jargs[k];
@@ -72,15 +49,7 @@ namespace BDSPMapInserter.Data.Bundles
 
             JArray jstrings = (JArray)jfile["StrList"];
             var stringArray = baseField["StrList"]["Array"];
-
-            if (jstrings.Count <= stringArray.childrenCount) stringArray.SetChildrenList(stringArray.children.Take(jstrings.Count).ToArray());
-            else
-            {
-                List<AssetTypeValueField> extra = new List<AssetTypeValueField>();
-                for (int i = stringArray.childrenCount; i < jstrings.Count; i++) extra.Add(ValueBuilder.DefaultValueFieldFromArrayTemplate(stringArray));
-                stringArray.SetChildrenList(stringArray.children.Concat(extra).ToArray());
-            }
-
+            AdjustArrayLength(jstrings, stringArray);
             for (int i = 0; i < jstrings.Count; i++)
             {
                 JToken jstring = jstrings[i];

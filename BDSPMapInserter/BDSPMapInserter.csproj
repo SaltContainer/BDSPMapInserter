@@ -72,12 +72,17 @@
     <Compile Include="Data\Bundles\Bundle.cs" />
     <Compile Include="Data\Bundles\GameSettingsBundle.cs" />
     <Compile Include="Data\Bundles\MasterDatasBundle.cs" />
+    <Compile Include="Data\Bundles\MessageBundle.cs" />
     <Compile Include="Data\Bundles\ScriptBundle.cs" />
     <Compile Include="Data\JSONObjects\Bundle\BundleInfo.cs" />
     <Compile Include="Data\JSONObjects\Maps\ZoneInfo.cs" />
     <Compile Include="Data\Utils\FileConstants.cs" />
     <Compile Include="Engine\MainEngine.cs" />
     <Compile Include="Engine\MapEditor\MapEditorEngine.cs" />
+    <Compile Include="Engine\MapEditor\Model\GameSettings\AttributeFile.cs" />
+    <Compile Include="Engine\MapEditor\Model\GameSettings\Camera.cs" />
+    <Compile Include="Engine\MapEditor\Model\GameSettings\ZoneData.cs" />
+    <Compile Include="Engine\MapEditor\Model\GameSettings\MapInfoFile.cs" />
     <Compile Include="Engine\MapEditor\Model\MasterDatas\MasterDatasFile.cs" />
     <Compile Include="Engine\MessageEditor\MessageEditorEngine.cs" />
     <Compile Include="Engine\MessageEditor\Model\MessageFile.cs" />
@@ -127,8 +132,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Engine\MapEditor\Model\GameSettings\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

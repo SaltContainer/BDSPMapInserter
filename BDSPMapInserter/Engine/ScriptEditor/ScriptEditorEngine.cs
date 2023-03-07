@@ -96,6 +96,7 @@ namespace BDSPMapInserter.Engine.ScriptEditor
 
         private List<JObject> ConvertFromScriptFiles(List<ScriptFile> scriptFiles)
         {
+            // TODO: Add missing values
             List<ScriptFile> convertedScriptFiles = ConvertStringsToIndex(scriptFiles);
 
             List<JObject> json = new List<JObject>();
@@ -104,6 +105,7 @@ namespace BDSPMapInserter.Engine.ScriptEditor
             {
                 json.Add(new JObject(
                     new JProperty("PathID", scriptFile.PathID),
+                    new JProperty("ClassID", 0),
                     new JProperty("FileName", scriptFile.FileName),
                     new JProperty("Scripts",
                         new JArray(

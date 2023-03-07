@@ -101,12 +101,14 @@ namespace BDSPMapInserter.Engine.MessageEditor
 
         private List<JObject> ConvertFromMessageFiles(List<MessageFile> messageFiles)
         {
+            // TODO: Add missing values
             List<JObject> json = new List<JObject>();
 
             foreach (MessageFile messageFile in messageFiles)
             {
                 json.Add(new JObject(
                     new JProperty("PathID", messageFile.PathID),
+                    new JProperty("ClassID", 0),
                     new JProperty("FileName", messageFile.FileName),
                     new JProperty("langID", messageFile.LanguageID),
                     new JProperty("isKanji", messageFile.IsKanji),
@@ -136,6 +138,7 @@ namespace BDSPMapInserter.Engine.MessageEditor
 
         public float CalculateStringLength(string input)
         {
+            // TODO: Do the math
             return 0.0f;
         }
     }

@@ -10,12 +10,14 @@ namespace BDSPMapInserter.Engine.MapEditor.Model
     internal class MasterDatasFile
     {
         public List<bool> Data { get; set; }
+        public int ClassID { get; set; }
         public string FileName { get; set; }
         public long PathID { get; set; }
 
-        public MasterDatasFile(List<bool> data, string fileName, long pathID)
+        public MasterDatasFile(List<bool> data, int classID, string fileName, long pathID)
         {
             Data = data;
+            ClassID = classID;
             FileName = fileName;
             PathID = pathID;
         }

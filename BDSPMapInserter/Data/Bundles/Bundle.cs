@@ -64,6 +64,7 @@ namespace BDSPMapInserter.Data
             ReplaceInBundle(new List<AssetsReplacer>() { replacer });
 
             data["PathID"] = pathId;
+            data["ClassID"] = classId;
             AssetsReplacer newReplacer = GenerateReplacerAtFile(baseField, data);
             ReplaceInBundle(new List<AssetsReplacer>() { newReplacer });
         }
@@ -95,6 +96,17 @@ namespace BDSPMapInserter.Data
         }
 
         protected abstract AssetsReplacer GenerateReplacerAtFile(AssetTypeValueField baseField, JObject jfile);
+
+        protected void AdjustArrayLength(JArray jarray, AssetTypeValueField field)
+        {
+            if (jarray.Count <= field.childrenCount) field.SetChildrenList(field.children.Take(jarray.Count).ToArray());
+            else
+            {
+                List<AssetTypeValueField> extra = new List<AssetTypeValueField>();
+                for (int j = field.childrenCount; j < jarray.Count; j++) extra.Add(ValueBuilder.DefaultValueFieldFromArrayTemplate(field));
+                field.SetChildrenList(field.children.Concat(extra).ToArray());
+            }
+        }
 
         private List<AssetsReplacer> GenerateReplacers(List<JObject> files)
         {

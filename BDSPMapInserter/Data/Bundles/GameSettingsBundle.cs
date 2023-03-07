@@ -15,78 +15,145 @@ namespace BDSPMapInserter.Data.Bundles
 
         protected override AssetsReplacer GenerateReplacerAtFile(AssetTypeValueField baseField, JObject jfile)
         {
-            // TODO: Adapt
+            switch (baseField["ClassID"].GetValue().AsInt())
+            {
+                case 0:
+                    return GenerateMapInfoReplacerAtFile(baseField, jfile);
+                case 11:
+                    return GenerateAttributeReplacerAtFile(baseField, jfile);
+                default:
+                    return null;
+            }
+        }
+
+        private AssetsReplacer GenerateMapInfoReplacerAtFile(AssetTypeValueField baseField, JObject jfile)
+        {
+            // TODO: Add missing values
             AssetFileInfoEx fileInfo = assetsFile.table.GetAssetInfo(jfile["PathID"].Value<long>());
 
             baseField["m_Name"].GetValue().Set(jfile["FileName"].ToString());
 
-            JArray jscripts = (JArray)jfile["Scripts"];
-            var scriptArray = baseField["Scripts"]["Array"];
-
-            if (jscripts.Count <= scriptArray.childrenCount) scriptArray.SetChildrenList(scriptArray.children.Take(jscripts.Count).ToArray());
-            else
+            JArray jzoneDatas = (JArray)jfile["ZoneData"];
+            var zoneDataArray = baseField["ZoneData"]["Array"];
+            AdjustArrayLength(jzoneDatas, zoneDataArray);
+            for (int i = 0; i < jzoneDatas.Count; i++)
             {
-                List<AssetTypeValueField> extra = new List<AssetTypeValueField>();
-                for (int i = scriptArray.childrenCount; i < jscripts.Count; i++) extra.Add(ValueBuilder.DefaultValueFieldFromArrayTemplate(scriptArray));
-                scriptArray.SetChildrenList(scriptArray.children.Concat(extra).ToArray());
-            }
+                JToken jzoneData = jzoneDatas[i];
 
-            for (int i = 0; i < jscripts.Count; i++)
-            {
-                JToken jscript = jscripts[i];
-                baseField["Scripts"][0][i]["Label"].GetValue().Set(jscript["Label"].ToString());
+                baseField["ZoneData"][0][i]["Caption"].GetValue().Set(jzoneData["Caption"].ToString());
+                baseField["ZoneData"][0][i]["MSLabel"].GetValue().Set(jzoneData["MSLabel"].ToString());
+                baseField["ZoneData"][0][i]["PokePlaceName"].GetValue().Set(jzoneData["PokePlaceName"].ToString());
+                baseField["ZoneData"][0][i]["FlyingPlaceName"].GetValue().Set(jzoneData["FlyingPlaceName"].ToString());
+                baseField["ZoneData"][0][i]["MapType"].GetValue().Set(jzoneData["MapType"].Value<int>());
+                baseField["ZoneData"][0][i]["IsField"].GetValue().Set(jzoneData["IsField"].Value<int>());
+                baseField["ZoneData"][0][i]["LandmarkType"].GetValue().Set(jzoneData["LandmarkType"].Value<int>());
+                baseField["ZoneData"][0][i]["MiniMapOffset"]["x"].GetValue().Set(jzoneData["MiniMapOffset"]["x"].Value<float>());
+                baseField["ZoneData"][0][i]["MiniMapOffset"]["y"].GetValue().Set(jzoneData["MiniMapOffset"]["y"].Value<float>());
+                baseField["ZoneData"][0][i]["Bicycle"].GetValue().Set(jzoneData["Bicycle"].Value<int>());
+                baseField["ZoneData"][0][i]["Escape"].GetValue().Set(jzoneData["Escape"].Value<int>());
+                baseField["ZoneData"][0][i]["Fly"].GetValue().Set(jzoneData["Fly"].Value<int>());
+                baseField["ZoneData"][0][i]["BattleSearcher"].GetValue().Set(jzoneData["BattleSearcher"].Value<int>());
+                baseField["ZoneData"][0][i]["TureAruki"].GetValue().Set(jzoneData["TureAruki"].Value<int>());
+                baseField["ZoneData"][0][i]["KuruKuru"].GetValue().Set(jzoneData["KuruKuru"].Value<int>());
+                baseField["ZoneData"][0][i]["Fall"].GetValue().Set(jzoneData["Fall"].Value<int>());
 
-                JArray jcommands = (JArray)jscript["Commands"];
-                var commandArray = baseField["Scripts"][0][i]["Commands"]["Array"];
-
-                if (jcommands.Count <= commandArray.childrenCount) commandArray.SetChildrenList(commandArray.children.Take(jcommands.Count).ToArray());
-                else
+                JArray jbattlebgs = (JArray)jzoneData["BattleBg"];
+                var battlebgArray = baseField["ZoneData"][0][i]["BattleBg"]["Array"];
+                AdjustArrayLength(jbattlebgs, battlebgArray);
+                for (int j = 0; j < jbattlebgs.Count; j++)
                 {
-                    List<AssetTypeValueField> extra = new List<AssetTypeValueField>();
-                    for (int j = commandArray.childrenCount; j < jcommands.Count; j++) extra.Add(ValueBuilder.DefaultValueFieldFromArrayTemplate(commandArray));
-                    commandArray.SetChildrenList(commandArray.children.Concat(extra).ToArray());
+                    JToken jbattlebg = jbattlebgs[j];
+                    baseField["ZoneData"][0][i]["BattleBg"][0][j].GetValue().Set(jbattlebg.Value<int>());
                 }
 
-                for (int j = 0; j < jcommands.Count; j++)
+                baseField["ZoneData"][0][i]["ZoneID"].GetValue().Set(jzoneData["ZoneID"].Value<int>());
+                baseField["ZoneData"][0][i]["AreaID"].GetValue().Set(jzoneData["AreaID"].Value<int>());
+                baseField["ZoneData"][0][i]["ZoneGrid"]["m_FileID"].GetValue().Set(jzoneData["ZoneGrid"]["m_FileID"].Value<int>());
+                baseField["ZoneData"][0][i]["ZoneGrid"]["m_PathID"].GetValue().Set(jzoneData["ZoneGrid"]["m_PathID"].Value<long>());
+                baseField["ZoneData"][0][i]["Attribute"]["m_FileID"].GetValue().Set(jzoneData["Attribute"]["m_FileID"].Value<int>());
+                baseField["ZoneData"][0][i]["Attribute"]["m_PathID"].GetValue().Set(jzoneData["Attribute"]["m_PathID"].Value<long>());
+                baseField["ZoneData"][0][i]["AttributeEx"]["m_FileID"].GetValue().Set(jzoneData["AttributeEx"]["m_FileID"].Value<int>());
+                baseField["ZoneData"][0][i]["AttributeEx"]["m_PathID"].GetValue().Set(jzoneData["AttributeEx"]["m_PathID"].Value<long>());
+                baseField["ZoneData"][0][i]["SubAttribute"]["m_FileID"].GetValue().Set(jzoneData["SubAttribute"]["m_FileID"].Value<int>());
+                baseField["ZoneData"][0][i]["SubAttribute"]["m_PathID"].GetValue().Set(jzoneData["SubAttribute"]["m_PathID"].Value<long>());
+                baseField["ZoneData"][0][i]["SubAttributeEx"]["m_FileID"].GetValue().Set(jzoneData["SubAttributeEx"]["m_FileID"].Value<int>());
+                baseField["ZoneData"][0][i]["SubAttributeEx"]["m_PathID"].GetValue().Set(jzoneData["SubAttributeEx"]["m_PathID"].Value<long>());
+
+                JArray jbgms = (JArray)jzoneData["BGM"];
+                var bgmArray = baseField["ZoneData"][0][i]["BGM"]["Array"];
+                AdjustArrayLength(jbgms, bgmArray);
+                for (int j = 0; j < jbgms.Count; j++)
                 {
-                    JToken jcommand = jcommands[j];
+                    JToken jbgm = jbgms[j];
+                    baseField["ZoneData"][0][i]["BGM"][0][j].GetValue().Set(jbgm.ToString());
+                }
 
-                    JArray jargs = (JArray)jcommand["Arg"];
-                    var argArray = baseField["Scripts"][0][i]["Commands"][0][j]["Arg"]["Array"];
+                baseField["ZoneData"][0][i]["EnvironmentalSound"].GetValue().Set(jzoneData["EnvironmentalSound"].ToString());
+                baseField["ZoneData"][0][i]["Weather"].GetValue().Set(jzoneData["Weather"].Value<int>());
+                baseField["ZoneData"][0][i]["RenderSettings"]["m_FileID"].GetValue().Set(jzoneData["RenderSettings"]["m_FileID"].Value<int>());
+                baseField["ZoneData"][0][i]["RenderSettings"]["m_PathID"].GetValue().Set(jzoneData["RenderSettings"]["m_PathID"].Value<long>());
+                baseField["ZoneData"][0][i]["ReflectionCamera"].GetValue().Set(jzoneData["ReflectionCamera"].Value<int>());
+                baseField["ZoneData"][0][i]["FixedTime"].GetValue().Set(jzoneData["FixedTime"].Value<int>());
+                baseField["ZoneData"][0][i]["AssetBundleName"].GetValue().Set(jzoneData["AssetBundleName"].ToString());
+                baseField["ZoneData"][0][i]["RoomPanCamera"].GetValue().Set(jzoneData["RoomPanCamera"].Value<int>());
 
-                    if (jargs.Count <= argArray.childrenCount) argArray.SetChildrenList(argArray.children.Take(jargs.Count).ToArray());
-                    else
-                    {
-                        List<AssetTypeValueField> extra = new List<AssetTypeValueField>();
-                        for (int k = argArray.childrenCount; k < jargs.Count; k++) extra.Add(ValueBuilder.DefaultValueFieldFromArrayTemplate(argArray));
-                        argArray.SetChildrenList(argArray.children.Concat(extra).ToArray());
-                    }
-
-                    for (int k = 0; k < jargs.Count; k++)
-                    {
-                        JToken jarg = jargs[k];
-                        baseField["Scripts"][0][i]["Commands"][0][j]["Arg"][0][k]["argType"].GetValue().Set(jarg["argType"]);
-                        baseField["Scripts"][0][i]["Commands"][0][j]["Arg"][0][k]["data"].GetValue().Set(jarg["data"]);
-                    }
+                JArray jlocators = (JArray)jzoneData["Locators"];
+                var locatorsArray = baseField["ZoneData"][0][i]["Locators"]["Array"];
+                AdjustArrayLength(jlocators, locatorsArray);
+                for (int j = 0; j < jlocators.Count; j++)
+                {
+                    JToken jlocator = jlocators[j];
+                    baseField["ZoneData"][0][i]["Locators"][0][j]["x"].GetValue().Set(jlocator["x"].ToString());
+                    baseField["ZoneData"][0][i]["Locators"][0][j]["y"].GetValue().Set(jlocator["y"].ToString());
+                    baseField["ZoneData"][0][i]["Locators"][0][j]["z"].GetValue().Set(jlocator["z"].ToString());
+                    baseField["ZoneData"][0][i]["Locators"][0][j]["w"].GetValue().Set(jlocator["w"].ToString());
                 }
             }
 
-            JArray jstrings = (JArray)jfile["StrList"];
-            var stringArray = baseField["StrList"]["Array"];
-
-            if (jstrings.Count <= stringArray.childrenCount) stringArray.SetChildrenList(stringArray.children.Take(jstrings.Count).ToArray());
-            else
+            JArray jcameras = (JArray)jfile["Camera"];
+            var cameraArray = baseField["Camera"]["Array"];
+            AdjustArrayLength(jcameras, cameraArray);
+            for (int i = 0; i < jcameras.Count; i++)
             {
-                List<AssetTypeValueField> extra = new List<AssetTypeValueField>();
-                for (int i = stringArray.childrenCount; i < jstrings.Count; i++) extra.Add(ValueBuilder.DefaultValueFieldFromArrayTemplate(stringArray));
-                stringArray.SetChildrenList(stringArray.children.Concat(extra).ToArray());
+                JToken jcamera = jcameras[i];
+
+                baseField["Camera"][0][i]["ariaID"].GetValue().Set(jcamera["ariaID"].Value<int>());
+                baseField["Camera"][0][i]["pitch"].GetValue().Set(jcamera["pitch"].Value<float>());
+                baseField["Camera"][0][i]["fov"].GetValue().Set(jcamera["fov"].Value<float>());
+                baseField["Camera"][0][i]["targetRange"].GetValue().Set(jcamera["targetRange"].Value<float>());
+                baseField["Camera"][0][i]["panDistance"].GetValue().Set(jcamera["panDistance"].Value<float>());
+                baseField["Camera"][0][i]["panPitch"].GetValue().Set(jcamera["panPitch"].Value<float>());
+                baseField["Camera"][0][i]["panFov"].GetValue().Set(jcamera["panFov"].Value<float>());
+                baseField["Camera"][0][i]["panpos_useflag"].GetValue().Set(jcamera["panpos_useflag"].Value<int>());
+                baseField["Camera"][0][i]["panMinposY"].GetValue().Set(jcamera["panMinposY"].Value<float>());
+                baseField["Camera"][0][i]["panMaxposY"].GetValue().Set(jcamera["panMaxposY"].Value<float>());
+                baseField["Camera"][0][i]["panMinposZ"].GetValue().Set(jcamera["panMinposZ"].Value<float>());
+                baseField["Camera"][0][i]["panMaxposZ"].GetValue().Set(jcamera["panMaxposZ"].Value<float>());
+                baseField["Camera"][0][i]["defocusStart"].GetValue().Set(jcamera["defocusStart"].Value<float>());
+                baseField["Camera"][0][i]["defocusEnd"].GetValue().Set(jcamera["defocusEnd"].Value<float>());
+                baseField["Camera"][0][i]["distance"].GetValue().Set(jcamera["distance"].Value<float>());
             }
 
-            for (int i = 0; i < jstrings.Count; i++)
+            return new AssetsReplacerFromMemory(0, fileInfo.index, (int)fileInfo.curFileType, 0xffff, baseField.WriteToByteArray());
+        }
+
+        private AssetsReplacer GenerateAttributeReplacerAtFile(AssetTypeValueField baseField, JObject jfile)
+        {
+            // TODO: Add missing values
+            AssetFileInfoEx fileInfo = assetsFile.table.GetAssetInfo(jfile["PathID"].Value<long>());
+
+            baseField["m_Name"].GetValue().Set(jfile["FileName"].ToString());
+
+            JArray jAttributes = (JArray)jfile["Attributes"];
+            var attributeArray = baseField["Attributes"]["Array"];
+            AdjustArrayLength(jAttributes, attributeArray);
+            for (int i = 0; i < jAttributes.Count; i++)
             {
-                JToken jstring = jstrings[i];
-                baseField["StrList"][0][i].GetValue().Set(jstring.ToString());
+                JToken jAttribute = jAttributes[i];
+                baseField["Attributes"][0][i].GetValue().Set(jAttribute.Value<long>());
             }
+
+            baseField["Width"].GetValue().Set(jfile["Width"].ToString());
 
             return new AssetsReplacerFromMemory(0, fileInfo.index, (int)fileInfo.curFileType, 0xffff, baseField.WriteToByteArray());
         }
