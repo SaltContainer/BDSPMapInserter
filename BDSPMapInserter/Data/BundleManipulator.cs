@@ -53,7 +53,7 @@ namespace BDSPMapInserter.Data
                                 BundleManipulator.bundles.Add(entry, new GameSettingsBundle(assetsManager, bundleDecompressor.LoadAndDecompressFile(Path.Combine(basePath, FileConstants.Bundles[entry].FullPath)), entry));
                                 break;
                             default:
-                                // TODO: Message bundles
+                                BundleManipulator.bundles.Add(entry, new MessageBundle(assetsManager, bundleDecompressor.LoadAndDecompressFile(Path.Combine(basePath, FileConstants.Bundles[entry].FullPath)), entry));
                                 break;
                         }
                     }
@@ -153,9 +153,9 @@ namespace BDSPMapInserter.Data
             bundles[bundleKey].SetFilesInBundle(files);
         }
 
-        public static void AddNewFileToBundle(string bundleKey, JObject data, int typeId, ushort classId)
+        public static void AddNewFileToBundle(string bundleKey, JObject data, int typeId, ushort classId, string container)
         {
-            bundles[bundleKey].AddAsset(typeId, classId, data);
+            bundles[bundleKey].AddAsset(typeId, classId, data, container);
         }
 
         public static bool SetBasePath(string path)

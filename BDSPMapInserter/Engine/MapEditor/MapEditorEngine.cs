@@ -47,6 +47,29 @@ namespace BDSPMapInserter.Engine.MapEditor
 
         public void SetMasterDatasFiles(List<MasterDatasFile> masterDatasFiles)
         {
+            List<MasterDatasFile> newFiles = new List<MasterDatasFile>();
+            foreach (MasterDatasFile file in masterDatasFiles)
+            {
+                if (!this.masterDatasFiles.Exists(f => f.PathID == file.PathID))
+                {
+                    newFiles.Add(file);
+                    string container = "";
+                    switch (file.ClassID)
+                    {
+                        case 1:
+                            container = string.Format("assets/md/mapwarpdata/mapwarp_{0}.asset", file.FileName.ToLower());
+                            break;
+                        case 24:
+                            container = string.Format("assets/md/placedata/placedata_{0}.asset", file.FileName.ToLower());
+                            break;
+                        case 30:
+                            container = string.Format("assets/md/stopdata/stopdata_{0}.asset", file.FileName.ToLower());
+                            break;
+                    }
+                    BundleManipulator.AddNewFileToBundle(FileConstants.DprMasterDatasBundleKey, ConvertFromMasterDatasFiles(new List<MasterDatasFile>() { file })[0], 114, (ushort)file.ClassID, container);
+                }
+            }
+            masterDatasFiles.RemoveAll(f => newFiles.Contains(f));
             BundleManipulator.SetFilesToBundle(FileConstants.DprMasterDatasBundleKey, ConvertFromMasterDatasFiles(masterDatasFiles));
         }
 
@@ -57,6 +80,16 @@ namespace BDSPMapInserter.Engine.MapEditor
 
         public void SetAttributeFiles(List<AttributeFile> attributeFiles)
         {
+            List<AttributeFile> newFiles = new List<AttributeFile>();
+            foreach (AttributeFile file in attributeFiles)
+            {
+                if (!this.attributeFiles.Exists(f => f.PathID == file.PathID))
+                {
+                    newFiles.Add(file);
+                    BundleManipulator.AddNewFileToBundle(FileConstants.GameSettingsBundleKey, ConvertFromAttributeFiles(new List<AttributeFile>() { file })[0], 114, 0xffff, "");
+                }
+            }
+            attributeFiles.RemoveAll(f => newFiles.Contains(f));
             BundleManipulator.SetFilesToBundle(FileConstants.GameSettingsBundleKey, ConvertFromAttributeFiles(attributeFiles));
         }
 
@@ -232,7 +265,6 @@ namespace BDSPMapInserter.Engine.MapEditor
 
         private List<JObject> ConvertFromMasterDatasFiles(List<MasterDatasFile> masterdatasFiles)
         {
-            // TODO: Add missing values
             List<JObject> json = new List<JObject>();
 
             foreach (MasterDatasFile masterdatasFile in masterdatasFiles)
@@ -250,7 +282,6 @@ namespace BDSPMapInserter.Engine.MapEditor
 
         private List<JObject> ConvertFromMapInfoFile(MapInfoFile mapInfoFile)
         {
-            // TODO: Add missing values
             List<JObject> json = new List<JObject>
             {
                 new JObject(
@@ -381,7 +412,6 @@ namespace BDSPMapInserter.Engine.MapEditor
 
         private List<JObject> ConvertFromAttributeFiles(List<AttributeFile> attributeFiles)
         {
-            // TODO: Add missing values
             List<JObject> json = new List<JObject>();
 
             foreach (AttributeFile attributeFile in attributeFiles)

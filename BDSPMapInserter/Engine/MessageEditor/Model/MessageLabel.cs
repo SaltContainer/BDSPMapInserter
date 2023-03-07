@@ -8,13 +8,15 @@ namespace BDSPMapInserter.Engine.MessageEditor.Model
 {
     internal class MessageLabel
     {
-        public int Index { get; set; }
+        public int LabelIndex { get; set; }
+        public int ArrayIndex { get; set; }
         public string Name { get; set; }
         public List<Word> Words { get; set; }
 
-        public MessageLabel(int index, string name, List<Word> words)
+        public MessageLabel(int labelIndex, int arrayIndex, string name, List<Word> words)
         {
-            Index = index;
+            LabelIndex = labelIndex;
+            ArrayIndex = arrayIndex;
             Name = name;
             Words = words;
         }

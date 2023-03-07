@@ -28,8 +28,13 @@ namespace BDSPMapInserter.Data.Bundles
 
         private AssetsReplacer GenerateMapInfoReplacerAtFile(AssetTypeValueField baseField, JObject jfile)
         {
-            // TODO: Add missing values
             AssetFileInfoEx fileInfo = assetsFile.table.GetAssetInfo(jfile["PathID"].Value<long>());
+
+            baseField["m_GameObject"]["m_FileID"].GetValue().Set(0);
+            baseField["m_GameObject"]["m_PathID"].GetValue().Set(0);
+            baseField["m_Enabled"].GetValue().Set(1);
+            baseField["m_Script"]["m_FileID"].GetValue().Set(0);
+            baseField["m_Script"]["m_PathID"].GetValue().Set(-7230471827527798639);
 
             baseField["m_Name"].GetValue().Set(jfile["FileName"].ToString());
 
@@ -139,8 +144,13 @@ namespace BDSPMapInserter.Data.Bundles
 
         private AssetsReplacer GenerateAttributeReplacerAtFile(AssetTypeValueField baseField, JObject jfile)
         {
-            // TODO: Add missing values
             AssetFileInfoEx fileInfo = assetsFile.table.GetAssetInfo(jfile["PathID"].Value<long>());
+
+            baseField["m_GameObject"]["m_FileID"].GetValue().Set(0);
+            baseField["m_GameObject"]["m_PathID"].GetValue().Set(0);
+            baseField["m_Enabled"].GetValue().Set(1);
+            baseField["m_Script"]["m_FileID"].GetValue().Set(0);
+            baseField["m_Script"]["m_PathID"].GetValue().Set(8862252896882353750);
 
             baseField["m_Name"].GetValue().Set(jfile["FileName"].ToString());
 

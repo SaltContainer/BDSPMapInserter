@@ -28,6 +28,17 @@ namespace BDSPMapInserter.Engine.ScriptEditor
 
         public void SetScriptFiles(List<ScriptFile> scriptFiles)
         {
+            List<ScriptFile> newFiles = new List<ScriptFile>();
+            foreach (ScriptFile file in scriptFiles)
+            {
+                if (!this.scriptFiles.Exists(f => f.PathID == file.PathID))
+                {
+                    newFiles.Add(file);
+                    string container = string.Format("assets/evscriptdata/eventasset/{0}.asset", file.FileName);
+                    BundleManipulator.AddNewFileToBundle(FileConstants.ScriptDataBundleKey, ConvertFromScriptFiles(new List<ScriptFile>() { file })[0], 114, 0xffff, container);
+                }
+            }
+            scriptFiles.RemoveAll(f => newFiles.Contains(f));
             BundleManipulator.SetFilesToBundle(FileConstants.ScriptDataBundleKey, ConvertFromScriptFiles(scriptFiles));
         }
 
@@ -96,7 +107,6 @@ namespace BDSPMapInserter.Engine.ScriptEditor
 
         private List<JObject> ConvertFromScriptFiles(List<ScriptFile> scriptFiles)
         {
-            // TODO: Add missing values
             List<ScriptFile> convertedScriptFiles = ConvertStringsToIndex(scriptFiles);
 
             List<JObject> json = new List<JObject>();

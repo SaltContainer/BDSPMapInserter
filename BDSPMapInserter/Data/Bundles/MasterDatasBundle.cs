@@ -15,8 +15,28 @@ namespace BDSPMapInserter.Data.Bundles
 
         protected override AssetsReplacer GenerateReplacerAtFile(AssetTypeValueField baseField, JObject jfile)
         {
-            // TODO: Add missing values
             AssetFileInfoEx fileInfo = assetsFile.table.GetAssetInfo(jfile["PathID"].Value<long>());
+
+            baseField["m_GameObject"]["m_FileID"].GetValue().Set(0);
+            baseField["m_GameObject"]["m_PathID"].GetValue().Set(0);
+            baseField["m_Enabled"].GetValue().Set(1);
+            baseField["m_Script"]["m_FileID"].GetValue().Set(0);
+
+            switch (jfile["ClassID"].Value<int>())
+            {
+                case 1:
+                    baseField["m_Script"]["m_PathID"].GetValue().Set(-7768618106554099594);
+                    break;
+                case 24:
+                    baseField["m_Script"]["m_PathID"].GetValue().Set(4652281892236711381);
+                    break;
+                case 30:
+                    baseField["m_Script"]["m_PathID"].GetValue().Set(8423137904901713306);
+                    break;
+                default:
+                    baseField["m_Script"]["m_PathID"].GetValue().Set(0);
+                    break;
+            }
 
             baseField["m_Name"].GetValue().Set(jfile["FileName"].ToString());
 

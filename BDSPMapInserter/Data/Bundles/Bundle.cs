@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.ComponentModel;
 
 namespace BDSPMapInserter.Data
 {
@@ -42,7 +43,7 @@ namespace BDSPMapInserter.Data
             ReplaceInBundle(replacers);
         }
 
-        public void AddAsset(int typeId, ushort classId, JObject data)
+        public void AddAsset(int typeId, ushort classId, JObject data, string container)
         {
             AssetTypeTemplateField tempField = new AssetTypeTemplateField();
             byte[] assetBytes;
@@ -67,6 +68,12 @@ namespace BDSPMapInserter.Data
             data["ClassID"] = classId;
             AssetsReplacer newReplacer = GenerateReplacerAtFile(baseField, data);
             ReplaceInBundle(new List<AssetsReplacer>() { newReplacer });
+
+            if (container != null && container != "")
+            {
+                AssetsReplacer containerReplacer = GenerateFileContainerReplacer(pathId, container);
+                ReplaceInBundle(new List<AssetsReplacer>() { containerReplacer });
+            }
         }
 
         public Dictionary<long, AssetTypeValueField> GetFilesInBundle()
@@ -133,6 +140,30 @@ namespace BDSPMapInserter.Data
                     newData = stream.ToArray();
                 }
             }
+        }
+
+        private AssetsReplacerFromMemory GenerateFileContainerReplacer(long pathId, string container)
+        {
+            AssetFileInfoEx fileInfo = assetsFile.table.GetAssetInfo(1);
+            AssetTypeValueField baseField = assetsManager.GetTypeInstance(assetsFile, fileInfo).GetBaseField();
+
+            AssetTypeValueField preloadArray = baseField["m_PreloadTable"]["Array"];
+            AssetTypeValueField newPreload = ValueBuilder.DefaultValueFieldFromArrayTemplate(preloadArray);
+            newPreload["m_FileID"].GetValue().Set(0);
+            newPreload["m_PathID"].GetValue().Set(pathId);
+            int newItemIndex = preloadArray.childrenCount;
+            preloadArray.SetChildrenList(preloadArray.children.Append(newPreload).ToArray());
+
+            AssetTypeValueField containerArray = baseField["m_Container"]["Array"];
+            AssetTypeValueField newContainer = ValueBuilder.DefaultValueFieldFromArrayTemplate(containerArray);
+            newContainer[0].GetValue().Set(container);
+            newContainer[1]["preloadIndex"].GetValue().Set(newItemIndex);
+            newContainer[1]["preloadSize"].GetValue().Set(2);
+            newContainer[1]["asset"]["m_FileID"].GetValue().Set(0);
+            newContainer[1]["asset"]["m_PathID"].GetValue().Set(pathId);
+            preloadArray.SetChildrenList(containerArray.children.Append(newContainer).ToArray());
+
+            return new AssetsReplacerFromMemory(0, fileInfo.index, (int)fileInfo.curFileType, 0xffff, baseField.WriteToByteArray());
         }
 
         private AssetTypeValueField GetBaseField(string fileName)

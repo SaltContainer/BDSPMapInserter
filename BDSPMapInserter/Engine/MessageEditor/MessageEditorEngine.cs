@@ -89,8 +89,9 @@ namespace BDSPMapInserter.Engine.MessageEditor
                 }
 
                 string labelName = label["labelName"].GetValue().AsString();
-                int labelIndex = label["arrayIndex"].GetValue().AsInt();
-                labels.Add(new MessageLabel(labelIndex, labelName, words));
+                int labelIndex = label["labelIndex"].GetValue().AsInt();
+                int arrayIndex = label["arrayIndex"].GetValue().AsInt();
+                labels.Add(new MessageLabel(labelIndex, arrayIndex, labelName, words));
             }
 
             int languageId = root["langID"].GetValue().AsInt();
@@ -101,7 +102,6 @@ namespace BDSPMapInserter.Engine.MessageEditor
 
         private List<JObject> ConvertFromMessageFiles(List<MessageFile> messageFiles)
         {
-            // TODO: Add missing values
             List<JObject> json = new List<JObject>();
 
             foreach (MessageFile messageFile in messageFiles)
@@ -116,7 +116,8 @@ namespace BDSPMapInserter.Engine.MessageEditor
                         new JArray(
                             from l in messageFile.Labels
                             select new JObject(
-                                new JProperty("labelIndex", l.Index),
+                                new JProperty("labelIndex", l.LabelIndex),
+                                new JProperty("arrayIndex", l.ArrayIndex),
                                 new JProperty("labelName", l.Name),
                                 new JProperty("wordDataArray",
                                     new JArray(
