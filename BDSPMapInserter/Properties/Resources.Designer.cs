@@ -63,27 +63,36 @@ namespace BDSPMapInserter.Properties {
         /// <summary>
         ///   Looks up a localized string similar to [
         ///  {
-        ///    &quot;PathID&quot;: -4159401333858848265,
-        ///    &quot;FileName&quot;: &quot;battle_room&quot;,
-        ///    &quot;FriendlyName&quot;: &quot;Unused Wireless Battle Room (?)&quot;,
+        ///    &quot;ID&quot;: 0,
+        ///    &quot;AreaName&quot;: &quot;C01&quot;,
+        ///    &quot;FriendlyName&quot;: &quot;&quot;,
         ///    &quot;Description&quot;: &quot;&quot;
         ///  },
         ///  {
-        ///    &quot;PathID&quot;: -594893302899321786,
-        ///    &quot;FileName&quot;: &quot;bg_attr&quot;,
-        ///    &quot;FriendlyName&quot;: &quot;Tile-specific Scripts&quot;,
+        ///    &quot;ID&quot;: 1,
+        ///    &quot;AreaName&quot;: &quot;C01FS0101&quot;,
+        ///    &quot;FriendlyName&quot;: &quot;&quot;,
         ///    &quot;Description&quot;: &quot;&quot;
         ///  },
         ///  {
-        ///    &quot;PathID&quot;: -524791092379703435,
-        ///    &quot;FileName&quot;: &quot;c01&quot;,
-        ///    &quot;FriendlyName&quot;: &quot;Jubilife City&quot;,
+        ///    &quot;ID&quot;: 2,
+        ///    &quot;AreaName&quot;: &quot;C01PC0101&quot;,
+        ///    &quot;FriendlyName&quot;: &quot;&quot;,
         ///    &quot;Description&quot;: &quot;&quot;
         ///  },
         ///  {
-        ///    &quot;PathID&quot;: -696005077699342123,
-        ///    &quot;FileName&quot;: &quot;c01fs0101&quot;,
-        ///    [rest of string was truncated]&quot;;.
+        ///    &quot;ID&quot;: 3,
+        ///    &quot;AreaName&quot;: &quot;C01PC0102&quot;,
+        ///    &quot;FriendlyName&quot;: &quot;&quot;,
+        ///    &quot;Description&quot;: &quot;&quot;
+        ///  },
+        ///  {
+        ///    &quot;ID&quot;: 4,
+        ///    &quot;AreaName&quot;: &quot;C01PC0103&quot;,
+        ///    &quot;FriendlyName&quot;: &quot;&quot;,
+        ///    &quot;Description&quot;: &quot;&quot;
+        ///  },
+        /// [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string area_id {
             get {
@@ -99,10 +108,17 @@ namespace BDSPMapInserter.Properties {
         ///		&quot;full_path&quot;: &quot;Data\\StreamingAssets\\AssetAssistant\\Dpr\\ev_script&quot;,
         ///		&quot;cab_directory&quot;: &quot;CAB-e856180fe48cd419c06715341f9e3f42&quot;,
         ///		&quot;files&quot;: [
-        ///			&quot;trainer&quot;
+        ///			&quot;debug&quot;
         ///		]
-        ///	}
-        ///}.
+        ///	},
+        ///	&quot;dpr-masterdatas&quot;: {
+        ///		&quot;key&quot;: &quot;dpr-masterdatas&quot;,
+        ///		&quot;file_name&quot;: &quot;masterdatas&quot;,
+        ///		&quot;full_path&quot;: &quot;Data\\StreamingAssets\\AssetAssistant\\Dpr\\masterdatas&quot;,
+        ///		&quot;cab_directory&quot;: &quot;CAB-9dc85906fd5b2461ef3e4f7cfebad93c&quot;,
+        ///		&quot;files&quot;: [
+        ///			&quot;MapWarp_A01&quot;,
+        ///			&quot;PlaceData_A0 [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string bundle_constants {
             get {
@@ -111,29 +127,87 @@ namespace BDSPMapInserter.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap folder {
+            get {
+                object obj = ResourceManager.GetObject("folder", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap save {
+            get {
+                object obj = ResourceManager.GetObject("save", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap sinnoh {
+            get {
+                object obj = ResourceManager.GetObject("sinnoh", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon sinnoh_ico {
+            get {
+                object obj = ResourceManager.GetObject("sinnoh_ico", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string str_length {
+            get {
+                return ResourceManager.GetString("str_length", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to [
         ///  {
-        ///    &quot;PathID&quot;: -4159401333858848265,
-        ///    &quot;FileName&quot;: &quot;battle_room&quot;,
-        ///    &quot;FriendlyName&quot;: &quot;Unused Wireless Battle Room (?)&quot;,
+        ///    &quot;ID&quot;: 0,
+        ///    &quot;ZoneName&quot;: &quot;C01&quot;,
+        ///    &quot;FriendlyName&quot;: &quot;&quot;,
         ///    &quot;Description&quot;: &quot;&quot;
         ///  },
         ///  {
-        ///    &quot;PathID&quot;: -594893302899321786,
-        ///    &quot;FileName&quot;: &quot;bg_attr&quot;,
-        ///    &quot;FriendlyName&quot;: &quot;Tile-specific Scripts&quot;,
+        ///    &quot;ID&quot;: 1,
+        ///    &quot;ZoneName&quot;: &quot;C01FS0101&quot;,
+        ///    &quot;FriendlyName&quot;: &quot;&quot;,
         ///    &quot;Description&quot;: &quot;&quot;
         ///  },
         ///  {
-        ///    &quot;PathID&quot;: -524791092379703435,
-        ///    &quot;FileName&quot;: &quot;c01&quot;,
-        ///    &quot;FriendlyName&quot;: &quot;Jubilife City&quot;,
+        ///    &quot;ID&quot;: 2,
+        ///    &quot;ZoneName&quot;: &quot;C01PC0101&quot;,
+        ///    &quot;FriendlyName&quot;: &quot;&quot;,
         ///    &quot;Description&quot;: &quot;&quot;
         ///  },
         ///  {
-        ///    &quot;PathID&quot;: -696005077699342123,
-        ///    &quot;FileName&quot;: &quot;c01fs0101&quot;,
-        ///    [rest of string was truncated]&quot;;.
+        ///    &quot;ID&quot;: 3,
+        ///    &quot;ZoneName&quot;: &quot;C01PC0102&quot;,
+        ///    &quot;FriendlyName&quot;: &quot;&quot;,
+        ///    &quot;Description&quot;: &quot;&quot;
+        ///  },
+        ///  {
+        ///    &quot;ID&quot;: 4,
+        ///    &quot;ZoneName&quot;: &quot;C01PC0103&quot;,
+        ///    &quot;FriendlyName&quot;: &quot;&quot;,
+        ///    &quot;Description&quot;: &quot;&quot;
+        ///  },
+        /// [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string zone_id {
             get {

@@ -138,8 +138,19 @@ namespace BDSPMapInserter.Engine.MessageEditor
 
         public float CalculateStringLength(string input)
         {
-            // TODO: Do the math
-            return 0.0f;
+            float total = 0.0f;
+            foreach (char character in input)
+            {
+                if (FileConstants.Characters.Exists(c => c.Character.First() == character))
+                {
+                    total += FileConstants.Characters.Where(c => c.Character.First() == character).First().Length;
+                }
+                else
+                {
+                    total += FileConstants.Characters.Where(c => c.Character.First() == ' ').First().Length;
+                }
+            }
+            return total;
         }
     }
 }

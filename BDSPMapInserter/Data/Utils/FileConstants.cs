@@ -42,5 +42,7 @@ namespace BDSPMapInserter.Data.Utils
 
         public static List<ZoneInfo> Areas { get; } = JsonConvert.DeserializeObject<List<ZoneInfo>>(Resources.area_id);
         public static List<ZoneInfo> Zones { get; } = JsonConvert.DeserializeObject<List<ZoneInfo>>(Resources.zone_id);
+
+        public static List<CharacterInfo> Characters { get; } = JsonConvert.DeserializeObject<List<CharacterInfo>>(Resources.str_length);
     }
 }

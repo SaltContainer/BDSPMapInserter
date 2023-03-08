@@ -79,6 +79,7 @@
     <Compile Include="Data\Bundles\ScriptBundle.cs" />
     <Compile Include="Data\JSONObjects\Bundle\BundleInfo.cs" />
     <Compile Include="Data\JSONObjects\Maps\ZoneInfo.cs" />
+    <Compile Include="Data\JSONObjects\Message\CharacterInfo.cs" />
     <Compile Include="Data\Utils\FileConstants.cs" />
     <Compile Include="Engine\MainEngine.cs" />
     <Compile Include="Engine\MapEditor\MapEditorEngine.cs" />
@@ -120,6 +121,7 @@
     </EmbeddedResource>
     <None Include="JSON\area_id.json" />
     <None Include="JSON\bundle_constants.json" />
+    <None Include="JSON\str_length.json" />
     <None Include="JSON\zone_id.json" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -135,6 +137,17 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="UI\Icons\folder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="UI\Icons\save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="UI\Icons\sinnoh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="UI\Icons\sinnoh.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

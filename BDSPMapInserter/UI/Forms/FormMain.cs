@@ -1,4 +1,5 @@
 ﻿using BDSPMapInserter.Engine;
+using BDSPMapInserter.Properties;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using System;
 using System.Collections.Generic;
@@ -20,22 +21,24 @@ namespace BDSPMapInserter.UI.Forms
         public FormMain()
         {
             InitializeComponent();
+            Icon = Resources.sinnoh_ico;
+            SetTooltips();
 
             engine = new MainEngine();
-            SetTooltips();
         }
 
         private void SetTooltips()
         {
             ttMain.SetToolTip(lbZoneID, "The Zone ID that will be given to the new map.\nThis has to be sequential and cannot be changed.");
+            ttMain.SetToolTip(lbZoneIDNum, "The Zone ID that will be given to the new map.\nThis has to be sequential and cannot be changed.");
             ttMain.SetToolTip(lbAreaID, "The Area ID that will be given to the new map.\nThe default value is the next id after the highest used Area ID.");
             ttMain.SetToolTip(numAreaID, "The Area ID that will be given to the new map.\nThe default value is the next id after the highest used Area ID.");
             ttMain.SetToolTip(lbZoneCode, "The \"Zone Code\" that will be given to the new map.\nThis will be used for the names of the script files.");
             ttMain.SetToolTip(txtZoneCode, "The \"Zone Code\" that will be given to the new map.\nThis will be used for the names of the script files.");
             ttMain.SetToolTip(lbAreaCode, "The \"Area Code\" that will be given to the new map.\nThis will be used for the names of mapwarp, placedata, and stopdata files.");
             ttMain.SetToolTip(txtAreaCode, "The \"Area Code\" that will be given to the new map.\nThis will be used for the names of mapwarp, placedata, and stopdata files.");
-            ttMain.SetToolTip(lbMapInfo, "The map from which to copy the MapInfo data from.\nBoth the ZoneData and the Camera data.");
-            ttMain.SetToolTip(comboMapInfo, "The map from which to copy the MapInfo data from.\nBoth the ZoneData and the Camera data.");
+            ttMain.SetToolTip(lbMapInfo, "The map from which to copy the MapInfo data from.\nCopies both the ZoneData and the Camera data.");
+            ttMain.SetToolTip(comboMapInfo, "The map from which to copy the MapInfo data from.\nCopies both the ZoneData and the Camera data.");
             ttMain.SetToolTip(lbAreaName1, "The user-friendly name of the area.");
             ttMain.SetToolTip(txtAreaName1, "The user-friendly name of the area.");
             ttMain.SetToolTip(lbAreaName2, "The user-friendly name of the area (Displayed when entering?).");
@@ -64,7 +67,7 @@ namespace BDSPMapInserter.UI.Forms
 
         private void InitialValues()
         {
-            lbZoneID.Text = string.Format("Next ZoneID: {0}", engine.GetNextZoneID());
+            lbZoneIDNum.Text = string.Format("{0}", engine.GetNextZoneID());
             numAreaID.Value = engine.GetNextAreaID();
             comboMapInfo.DataSource = engine.GetClonableMapInfoData();
         }
@@ -78,8 +81,8 @@ namespace BDSPMapInserter.UI.Forms
             {
                 if (engine.SetBasePath(dialog.FileName))
                 {
-                    EnableControlsOnOpen();
                     InitialValues();
+                    EnableControlsOnOpen();
                 }
                 else
                 {
@@ -90,7 +93,13 @@ namespace BDSPMapInserter.UI.Forms
 
         private void btnExecute_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Not yet implemented.", "WIP", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            if (txtZoneCode.Text == "") MessageBox.Show("The Zone Code is empty.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            else if (txtAreaCode.Text == "") MessageBox.Show("The Area Code is empty.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            else if (txtAreaName1.Text == "") MessageBox.Show("The Area Name is empty.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            else if (txtAreaName2.Text == "") MessageBox.Show("The Area Name (Display) is empty.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            else if (txtAreaName3.Text == "") MessageBox.Show("The Area Name (Indirect) is empty.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            else if (txtAreaName4.Text == "") MessageBox.Show("The Area Name (Town Map) is empty.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            else MessageBox.Show("Not yet implemented.", "WIP", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }

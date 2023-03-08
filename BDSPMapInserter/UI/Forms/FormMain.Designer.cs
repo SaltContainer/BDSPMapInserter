@@ -31,7 +31,7 @@
             this.components = new System.ComponentModel.Container();
             this.btnOpen = new System.Windows.Forms.Button();
             this.btnExecute = new System.Windows.Forms.Button();
-            this.lbZoneID = new System.Windows.Forms.Label();
+            this.lbZoneIDNum = new System.Windows.Forms.Label();
             this.numAreaID = new System.Windows.Forms.NumericUpDown();
             this.lbAreaID = new System.Windows.Forms.Label();
             this.txtAreaName1 = new System.Windows.Forms.TextBox();
@@ -49,22 +49,25 @@
             this.lbAreaCode = new System.Windows.Forms.Label();
             this.txtAreaCode = new System.Windows.Forms.TextBox();
             this.ttMain = new System.Windows.Forms.ToolTip(this.components);
+            this.lbZoneID = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.numAreaID)).BeginInit();
             this.SuspendLayout();
             // 
             // btnOpen
             // 
+            this.btnOpen.Image = global::BDSPMapInserter.Properties.Resources.folder;
             this.btnOpen.Location = new System.Drawing.Point(25, 263);
             this.btnOpen.Name = "btnOpen";
             this.btnOpen.Size = new System.Drawing.Size(48, 46);
             this.btnOpen.TabIndex = 0;
-            this.btnOpen.Text = "Open";
             this.btnOpen.UseVisualStyleBackColor = true;
             this.btnOpen.Click += new System.EventHandler(this.btnOpen_Click);
             // 
             // btnExecute
             // 
             this.btnExecute.Enabled = false;
+            this.btnExecute.Image = global::BDSPMapInserter.Properties.Resources.save;
+            this.btnExecute.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnExecute.Location = new System.Drawing.Point(79, 263);
             this.btnExecute.Name = "btnExecute";
             this.btnExecute.Size = new System.Drawing.Size(225, 46);
@@ -73,14 +76,13 @@
             this.btnExecute.UseVisualStyleBackColor = true;
             this.btnExecute.Click += new System.EventHandler(this.btnExecute_Click);
             // 
-            // lbZoneID
+            // lbZoneIDNum
             // 
-            this.lbZoneID.Location = new System.Drawing.Point(12, 19);
-            this.lbZoneID.Name = "lbZoneID";
-            this.lbZoneID.Size = new System.Drawing.Size(292, 22);
-            this.lbZoneID.TabIndex = 2;
-            this.lbZoneID.Text = "Next ZoneID: ###";
-            this.lbZoneID.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.lbZoneIDNum.Location = new System.Drawing.Point(151, 22);
+            this.lbZoneIDNum.Name = "lbZoneIDNum";
+            this.lbZoneIDNum.Size = new System.Drawing.Size(64, 19);
+            this.lbZoneIDNum.TabIndex = 2;
+            this.lbZoneIDNum.Text = "###";
             // 
             // numAreaID
             // 
@@ -233,6 +235,15 @@
             this.ttMain.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             this.ttMain.ToolTipTitle = "Info";
             // 
+            // lbZoneID
+            // 
+            this.lbZoneID.AutoSize = true;
+            this.lbZoneID.Location = new System.Drawing.Point(96, 22);
+            this.lbZoneID.Name = "lbZoneID";
+            this.lbZoneID.Size = new System.Drawing.Size(49, 13);
+            this.lbZoneID.TabIndex = 19;
+            this.lbZoneID.Text = "Zone ID:";
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -255,6 +266,7 @@
             this.Controls.Add(this.lbAreaID);
             this.Controls.Add(this.numAreaID);
             this.Controls.Add(this.lbZoneID);
+            this.Controls.Add(this.lbZoneIDNum);
             this.Controls.Add(this.btnExecute);
             this.Controls.Add(this.btnOpen);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -273,7 +285,7 @@
 
         private System.Windows.Forms.Button btnOpen;
         private System.Windows.Forms.Button btnExecute;
-        private System.Windows.Forms.Label lbZoneID;
+        private System.Windows.Forms.Label lbZoneIDNum;
         private System.Windows.Forms.NumericUpDown numAreaID;
         private System.Windows.Forms.Label lbAreaID;
         private System.Windows.Forms.TextBox txtAreaName1;
@@ -291,6 +303,7 @@
         private System.Windows.Forms.Label lbAreaCode;
         private System.Windows.Forms.TextBox txtAreaCode;
         private System.Windows.Forms.ToolTip ttMain;
+        private System.Windows.Forms.Label lbZoneID;
     }
 }
 
