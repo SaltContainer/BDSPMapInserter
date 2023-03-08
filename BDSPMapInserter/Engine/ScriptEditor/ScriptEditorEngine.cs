@@ -66,7 +66,6 @@ namespace BDSPMapInserter.Engine.ScriptEditor
                 foreach (var file in files)
                 {
                     if (FileConstants.Bundles[FileConstants.ScriptDataBundleKey].Files.Contains(file.Value["m_Name"].GetValue().AsString()) && 
-                        file.Value["Scripts"] != null &&
                         file.Value["Scripts"].GetChildrenCount() > 0)
                     {
                         scriptFiles.Add(ConvertToScriptFile(file.Key, file.Value));

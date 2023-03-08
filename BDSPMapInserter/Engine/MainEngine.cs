@@ -1,4 +1,5 @@
 ﻿using BDSPMapInserter.Data;
+using BDSPMapInserter.Data.Utils;
 using BDSPMapInserter.Engine.MapEditor;
 using BDSPMapInserter.Engine.MapEditor.Model;
 using BDSPMapInserter.Engine.MessageEditor;
@@ -36,54 +37,24 @@ namespace BDSPMapInserter.Engine
             return BundleManipulator.GetBasePath();
         }
 
-        public List<MasterDatasFile> GetMasterDatasFiles()
+        public int GetNextZoneID()
         {
-            return mapEditor.GetMasterDatasFiles();
+            MapInfoFile mapInfo = mapEditor.GetMapInfoFile();
+            return mapInfo.ZoneData.Count;
         }
 
-        public MapInfoFile GetMapInfoFile()
+        public int GetNextAreaID()
         {
-            return mapEditor.GetMapInfoFile();
+            MapInfoFile mapInfo = mapEditor.GetMapInfoFile();
+            return mapInfo.ZoneData.Max(z => z.AreaID) + 1;
         }
 
-        public List<AttributeFile> GetAttributeFiles()
+        public List<string> GetClonableMapInfoData()
         {
-            return mapEditor.GetAttributeFiles();
-        }
-
-        public Dictionary<string, List<MessageFile>> GetMessageFiles()
-        {
-            return messageEditor.GetMessageFiles();
-        }
-
-        public List<ScriptFile> GetScriptFiles()
-        {
-            return scriptEditor.GetScriptFiles();
-        }
-
-        public void SetMasterDatasFiles(List<MasterDatasFile> masterDatasFiles)
-        {
-            mapEditor.SetMasterDatasFiles(masterDatasFiles);
-        }
-
-        public void SetMapInfoFile(MapInfoFile mapInfoFile)
-        {
-            mapEditor.SetMapInfoFile(mapInfoFile);
-        }
-
-        public void SetAttributeFiles(List<AttributeFile> attributeFiles)
-        {
-            mapEditor.SetAttributeFiles(attributeFiles);
-        }
-
-        public void SetMessageFiles(Dictionary<string, List<MessageFile>> messageFiles)
-        {
-            messageEditor.SetMessageFiles(messageFiles);
-        }
-
-        public void SetScriptFiles(List<ScriptFile> scriptFiles)
-        {
-            scriptEditor.SetScriptFiles(scriptFiles);
+            MapInfoFile mapInfo = mapEditor.GetMapInfoFile();
+            List<MessageFile> messageFiles = messageEditor.GetMessageFiles()[FileConstants.MessageEnglishBundleKey];
+            MessageFile messageFile = messageFiles.Where(f => f.FileName == "english_dp_fld_areaname").First();
+            return mapInfo.ZoneData.Select(z => string.Format("{0} ({1})", messageFile.Labels.Where(l => l.Name == z.PokePlaceName).First().Words[0].Data, z.ZoneID)).ToList();
         }
     }
 }

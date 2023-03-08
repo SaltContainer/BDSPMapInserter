@@ -63,7 +63,6 @@ namespace BDSPMapInserter.Engine.MessageEditor
                     foreach (var file in files)
                     {
                         if (FileConstants.Bundles[bundleKey].Files.Contains(file.Value["m_Name"].GetValue().AsString()) &&
-                            file.Value["labelDataArray"] != null &&
                             file.Value["labelDataArray"].GetChildrenCount() > 0)
                         {
                             bundleMessageFiles.Add(ConvertToMessageFile(file.Key, file.Value));

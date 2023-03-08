@@ -126,7 +126,7 @@ namespace BDSPMapInserter.Engine.MapEditor
                 foreach (var file in files)
                 {
                     if (FileConstants.Bundles[FileConstants.DprMasterDatasBundleKey].Files.Contains(file.Value["m_Name"].GetValue().AsString()) && 
-                        file.Value["Data"] != null)
+                        file.Value["Data"].GetChildrenCount() > 0)
                     {
                         Bundle bundle = BundleManipulator.GetBundle(FileConstants.DprMasterDatasBundleKey);
                         masterDatasFiles.Add(ConvertToMasterDatasFile(file.Key, file.Value, bundle));
@@ -144,14 +144,14 @@ namespace BDSPMapInserter.Engine.MapEditor
                 var files = BundleManipulator.GetFilesOfBundle(FileConstants.GameSettingsBundleKey);
                 foreach (var file in files)
                 {
-                    if (FileConstants.Bundles[FileConstants.GameSettingsBundleKey].Files.Contains(file.Value["m_Name"].GetValue().AsString()) &&
-                        file.Value["Data"] != null)
+                    if (FileConstants.Bundles[FileConstants.GameSettingsBundleKey].Files.Contains(file.Value["m_Name"].GetValue().AsString()))
                     {
-                        if (file.Value["m_Name"].GetValue().AsString() == "MapInfo")
+                        if (file.Value["m_Name"].GetValue().AsString() == "MapInfo" &&
+                            file.Value["ZoneData"].GetChildrenCount() > 0)
                         {
                             mapInfoFile = ConvertToMapInfoFile(file.Key, file.Value);
                         }
-                        else
+                        else if (file.Value["Attributes"].GetChildrenCount() > 0)
                         {
                             attributeFiles.Add(ConvertToAttributeFile(file.Key, file.Value));
                         }
@@ -174,46 +174,46 @@ namespace BDSPMapInserter.Engine.MapEditor
             string name = root["m_Name"].GetValue().AsString();
             
             List<ZoneData> zoneDatas = new List<ZoneData>();
-            foreach (var jzoneData in root["ZoneData"][0].GetChildrenList())
+            foreach (var zoneDataChild in root["ZoneData"][0].GetChildrenList())
             {
                 ZoneData zoneData = new ZoneData
                 {
-                    Caption = jzoneData["Caption"].GetValue().AsString(),
-                    MSLabel = jzoneData["MSLabel"].GetValue().AsString(),
-                    PokePlaceName = jzoneData["PokePlaceName"].GetValue().AsString(),
-                    FlyingPlaceName = jzoneData["FlyingPlaceName"].GetValue().AsString(),
-                    MapType = jzoneData["MapType"].GetValue().AsInt(),
-                    IsField = jzoneData["IsField"].GetValue().AsInt(),
-                    LandmarkType = jzoneData["LandmarkType"].GetValue().AsInt(),
+                    Caption = zoneDataChild["Caption"].GetValue().AsString(),
+                    MSLabel = zoneDataChild["MSLabel"].GetValue().AsString(),
+                    PokePlaceName = zoneDataChild["PokePlaceName"].GetValue().AsString(),
+                    FlyingPlaceName = zoneDataChild["FlyingPlaceName"].GetValue().AsString(),
+                    MapType = zoneDataChild["MapType"].GetValue().AsInt(),
+                    IsField = zoneDataChild["IsField"].GetValue().AsInt(),
+                    LandmarkType = zoneDataChild["LandmarkType"].GetValue().AsInt(),
                     MiniMapOffset = new PointF
                     (
-                        jzoneData["MiniMapOffset"]["x"].GetValue().AsFloat(),
-                        jzoneData["MiniMapOffset"]["y"].GetValue().AsFloat()
+                        zoneDataChild["MiniMapOffset"]["x"].GetValue().AsFloat(),
+                        zoneDataChild["MiniMapOffset"]["y"].GetValue().AsFloat()
                     ),
-                    Bicycle = jzoneData["Bicycle"].GetValue().AsInt(),
-                    Escape = jzoneData["Escape"].GetValue().AsInt(),
-                    Fly = jzoneData["Fly"].GetValue().AsInt(),
-                    BattleSearcher = jzoneData["BattleSearcher"].GetValue().AsInt(),
-                    TureAruki = jzoneData["TureAruki"].GetValue().AsInt(),
-                    KuruKuru = jzoneData["KuruKuru"].GetValue().AsInt(),
-                    Fall = jzoneData["Fall"].GetValue().AsInt(),
-                    BattleBg = jzoneData["BattleBg"][0].GetChildrenList().Select(b => b.GetValue().AsInt()).ToList(),
-                    ZoneID = jzoneData["ZoneID"].GetValue().AsInt(),
-                    AreaID = jzoneData["AreaID"].GetValue().AsInt(),
-                    ZoneGridPathID = jzoneData["ZoneGrid"].GetValue().AsInt64(),
-                    AttributePathID = jzoneData["Attribute"].GetValue().AsInt64(),
-                    AttributeExPathID = jzoneData["AttributeEx"].GetValue().AsInt64(),
-                    SubAttributePathID = jzoneData["SubAttribute"].GetValue().AsInt64(),
-                    SubAttributeExPathID = jzoneData["SubAttributeEx"].GetValue().AsInt64(),
-                    BGM = jzoneData["BGM"][0].GetChildrenList().Select(b => b.GetValue().AsString()).ToList(),
-                    EnvironmentalSound = jzoneData["EnvironmentalSound"].GetValue().AsString(),
-                    Weather = jzoneData["Weather"].GetValue().AsInt(),
-                    RenderSettingsPathID = jzoneData["RenderSettings"].GetValue().AsInt64(),
-                    ReflectionCamera = jzoneData["ReflectionCamera"].GetValue().AsInt(),
-                    FixedTime = jzoneData["FixedTime"].GetValue().AsInt(),
-                    AssetBundleName = jzoneData["AssetBundleName"].GetValue().AsString(),
-                    RoomPanCamera = jzoneData["RoomPanCamera"].GetValue().AsInt(),
-                    Locators = jzoneData["Locators"][0].GetChildrenList().Select(l =>
+                    Bicycle = zoneDataChild["Bicycle"].GetValue().AsInt(),
+                    Escape = zoneDataChild["Escape"].GetValue().AsInt(),
+                    Fly = zoneDataChild["Fly"].GetValue().AsInt(),
+                    BattleSearcher = zoneDataChild["BattleSearcher"].GetValue().AsInt(),
+                    TureAruki = zoneDataChild["TureAruki"].GetValue().AsInt(),
+                    KuruKuru = zoneDataChild["KuruKuru"].GetValue().AsInt(),
+                    Fall = zoneDataChild["Fall"].GetValue().AsInt(),
+                    BattleBg = zoneDataChild["BattleBg"][0].GetChildrenList().Select(b => b.GetValue().AsInt()).ToList(),
+                    ZoneID = zoneDataChild["ZoneID"].GetValue().AsInt(),
+                    AreaID = zoneDataChild["AreaID"].GetValue().AsInt(),
+                    ZoneGridPathID = zoneDataChild["ZoneGrid"]["m_PathID"].GetValue().AsInt64(),
+                    AttributePathID = zoneDataChild["Attribute"]["m_PathID"].GetValue().AsInt64(),
+                    AttributeExPathID = zoneDataChild["AttributeEx"]["m_PathID"].GetValue().AsInt64(),
+                    SubAttributePathID = zoneDataChild["SubAttribute"]["m_PathID"].GetValue().AsInt64(),
+                    SubAttributeExPathID = zoneDataChild["SubAttributeEx"]["m_PathID"].GetValue().AsInt64(),
+                    BGM = zoneDataChild["BGM"][0].GetChildrenList().Select(b => b.GetValue().AsString()).ToList(),
+                    EnvironmentalSound = zoneDataChild["EnvironmentalSound"].GetValue().AsString(),
+                    Weather = zoneDataChild["Weather"].GetValue().AsInt(),
+                    RenderSettingsPathID = zoneDataChild["RenderSettings"]["m_PathID"].GetValue().AsInt64(),
+                    ReflectionCamera = zoneDataChild["ReflectionCamera"].GetValue().AsInt(),
+                    FixedTime = zoneDataChild["FixedTime"].GetValue().AsInt(),
+                    AssetBundleName = zoneDataChild["AssetBundleName"].GetValue().AsString(),
+                    RoomPanCamera = zoneDataChild["RoomPanCamera"].GetValue().AsInt(),
+                    Locators = zoneDataChild["Locators"][0].GetChildrenList().Select(l =>
                         new Locator
                         (
                             l["x"].GetValue().AsFloat(),
@@ -228,25 +228,25 @@ namespace BDSPMapInserter.Engine.MapEditor
             }
 
             List<Camera> cameras = new List<Camera>();
-            foreach (var jcamera in root["Camera"][0].GetChildrenList())
+            foreach (var cameraChild in root["Camera"][0].GetChildrenList())
             {
                 Camera camera = new Camera
                 {
-                    AreaID = jcamera["ariaID"].GetValue().AsInt(),
-                    Pitch = jcamera["pitch"].GetValue().AsFloat(),
-                    FOV = jcamera["fov"].GetValue().AsFloat(),
-                    TargetRange = jcamera["targetRange"].GetValue().AsFloat(),
-                    PanDistance = jcamera["panDistance"].GetValue().AsFloat(),
-                    PanPitch = jcamera["panPitch"].GetValue().AsFloat(),
-                    PanFOV = jcamera["panFov"].GetValue().AsFloat(),
-                    PanPosUseFlag = jcamera["panpos_useflag"].GetValue().AsInt(),
-                    PanMinPosY = jcamera["panMinposY"].GetValue().AsFloat(),
-                    PanMaxPosY = jcamera["panMaxposY"].GetValue().AsFloat(),
-                    PanMinPosZ = jcamera["panMinposZ"].GetValue().AsFloat(),
-                    PanMaxPosZ = jcamera["panMaxposZ"].GetValue().AsFloat(),
-                    DefocusStart = jcamera["defocusStart"].GetValue().AsFloat(),
-                    DefocusEnd = jcamera["defocusEnd"].GetValue().AsFloat(),
-                    Distance = jcamera["distance"].GetValue().AsFloat()
+                    AreaID = cameraChild["ariaID"].GetValue().AsInt(),
+                    Pitch = cameraChild["pitch"].GetValue().AsFloat(),
+                    FOV = cameraChild["fov"].GetValue().AsFloat(),
+                    TargetRange = cameraChild["targetRange"].GetValue().AsFloat(),
+                    PanDistance = cameraChild["panDistance"].GetValue().AsFloat(),
+                    PanPitch = cameraChild["panPitch"].GetValue().AsFloat(),
+                    PanFOV = cameraChild["panFov"].GetValue().AsFloat(),
+                    PanPosUseFlag = cameraChild["panpos_useflag"].GetValue().AsInt(),
+                    PanMinPosY = cameraChild["panMinposY"].GetValue().AsFloat(),
+                    PanMaxPosY = cameraChild["panMaxposY"].GetValue().AsFloat(),
+                    PanMinPosZ = cameraChild["panMinposZ"].GetValue().AsFloat(),
+                    PanMaxPosZ = cameraChild["panMaxposZ"].GetValue().AsFloat(),
+                    DefocusStart = cameraChild["defocusStart"].GetValue().AsFloat(),
+                    DefocusEnd = cameraChild["defocusEnd"].GetValue().AsFloat(),
+                    Distance = cameraChild["distance"].GetValue().AsFloat()
                 };
 
                 cameras.Add(camera);
