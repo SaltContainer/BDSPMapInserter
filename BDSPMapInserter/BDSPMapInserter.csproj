@@ -84,6 +84,7 @@
     <Compile Include="Engine\MainEngine.cs" />
     <Compile Include="Engine\MapEditor\MapEditorEngine.cs" />
     <Compile Include="Engine\MapEditor\Model\GameSettings\AttributeFile.cs" />
+    <Compile Include="Engine\MapEditor\Model\GameSettings\AttributeMatrixFile.cs" />
     <Compile Include="Engine\MapEditor\Model\GameSettings\Camera.cs" />
     <Compile Include="Engine\MapEditor\Model\GameSettings\ZoneData.cs" />
     <Compile Include="Engine\MapEditor\Model\GameSettings\MapInfoFile.cs" />
@@ -106,6 +107,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UI\Model\ClonableMapInfoData.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

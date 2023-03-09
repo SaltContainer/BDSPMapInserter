@@ -15,10 +15,12 @@ namespace BDSPMapInserter.Data.Bundles
 
         protected override AssetsReplacer GenerateReplacerAtFile(AssetTypeValueField baseField, JObject jfile)
         {
-            switch (baseField["ClassID"].GetValue().AsInt())
+            switch (jfile["ClassID"].Value<int>())
             {
                 case 0:
                     return GenerateMapInfoReplacerAtFile(baseField, jfile);
+                case 8:
+                    return GenerateAttributeMatrixReplacerAtFile(baseField, jfile);
                 case 11:
                     return GenerateAttributeReplacerAtFile(baseField, jfile);
                 default:
@@ -142,6 +144,32 @@ namespace BDSPMapInserter.Data.Bundles
             return new AssetsReplacerFromMemory(0, fileInfo.index, (int)fileInfo.curFileType, 0xffff, baseField.WriteToByteArray());
         }
 
+        private AssetsReplacer GenerateAttributeMatrixReplacerAtFile(AssetTypeValueField baseField, JObject jfile)
+        {
+            AssetFileInfoEx fileInfo = assetsFile.table.GetAssetInfo(jfile["PathID"].Value<long>());
+
+            baseField["m_GameObject"]["m_FileID"].GetValue().Set(0);
+            baseField["m_GameObject"]["m_PathID"].GetValue().Set(0);
+            baseField["m_Enabled"].GetValue().Set(1);
+            baseField["m_Script"]["m_FileID"].GetValue().Set(0);
+            baseField["m_Script"]["m_PathID"].GetValue().Set(3076644756611336689);
+
+            baseField["m_Name"].GetValue().Set(jfile["FileName"].ToString());
+
+            JArray jAttributeBlocks = (JArray)jfile["AttributeBlocks"];
+            var attributeArray = baseField["AttributeBlocks"]["Array"];
+            AdjustArrayLength(jAttributeBlocks, attributeArray);
+            for (int i = 0; i < jAttributeBlocks.Count; i++)
+            {
+                JToken jAttributeBlock = jAttributeBlocks[i];
+                baseField["AttributeBlocks"][0][i].GetValue().Set(jAttributeBlock.Value<long>());
+            }
+
+            baseField["Width"].GetValue().Set(jfile["Width"].Value<int>());
+
+            return new AssetsReplacerFromMemory(0, fileInfo.index, (int)fileInfo.curFileType, 0xffff, baseField.WriteToByteArray());
+        }
+
         private AssetsReplacer GenerateAttributeReplacerAtFile(AssetTypeValueField baseField, JObject jfile)
         {
             AssetFileInfoEx fileInfo = assetsFile.table.GetAssetInfo(jfile["PathID"].Value<long>());
@@ -163,7 +191,7 @@ namespace BDSPMapInserter.Data.Bundles
                 baseField["Attributes"][0][i].GetValue().Set(jAttribute.Value<long>());
             }
 
-            baseField["Width"].GetValue().Set(jfile["Width"].ToString());
+            baseField["Width"].GetValue().Set(jfile["Width"].Value<int>());
 
             return new AssetsReplacerFromMemory(0, fileInfo.index, (int)fileInfo.curFileType, 0xffff, baseField.WriteToByteArray());
         }

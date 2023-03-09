@@ -19,12 +19,14 @@ namespace BDSPMapInserter.Engine.MapEditor
         private List<MasterDatasFile> masterDatasFiles;
         private MapInfoFile mapInfoFile;
         private List<AttributeFile> attributeFiles;
+        private List<AttributeMatrixFile> attributeMatrixFiles;
 
         public MapEditorEngine()
         {
             masterDatasFiles = new List<MasterDatasFile>();
             mapInfoFile = null;
             attributeFiles = new List<AttributeFile>();
+            attributeMatrixFiles = new List<AttributeMatrixFile>();
         }
 
         public List<MasterDatasFile> GetMasterDatasFiles()
@@ -43,6 +45,12 @@ namespace BDSPMapInserter.Engine.MapEditor
         {
             if (!AreGameSettingsFilesLoaded()) LoadGameSettingsFiles();
             return attributeFiles;
+        }
+
+        public List<AttributeMatrixFile> GetAttributeMatrixFiles()
+        {
+            if (!AreGameSettingsFilesLoaded()) LoadGameSettingsFiles();
+            return attributeMatrixFiles;
         }
 
         public void SetMasterDatasFiles(List<MasterDatasFile> masterDatasFiles)
@@ -93,6 +101,21 @@ namespace BDSPMapInserter.Engine.MapEditor
             BundleManipulator.SetFilesToBundle(FileConstants.GameSettingsBundleKey, ConvertFromAttributeFiles(attributeFiles));
         }
 
+        public void SetAttributeMatrixFiles(List<AttributeMatrixFile> attributeMatrixFiles)
+        {
+            List<AttributeMatrixFile> newFiles = new List<AttributeMatrixFile>();
+            foreach (AttributeMatrixFile file in attributeMatrixFiles)
+            {
+                if (!this.attributeMatrixFiles.Exists(f => f.PathID == file.PathID))
+                {
+                    newFiles.Add(file);
+                    BundleManipulator.AddNewFileToBundle(FileConstants.GameSettingsBundleKey, ConvertFromAttributeMatrixFiles(new List<AttributeMatrixFile>() { file })[0], 114, 0xffff, "");
+                }
+            }
+            attributeMatrixFiles.RemoveAll(f => newFiles.Contains(f));
+            BundleManipulator.SetFilesToBundle(FileConstants.GameSettingsBundleKey, ConvertFromAttributeMatrixFiles(attributeMatrixFiles));
+        }
+
         public bool SaveMapFiles(string path)
         {
             return BundleManipulator.SaveBundles(new List<string>() {
@@ -115,6 +138,25 @@ namespace BDSPMapInserter.Engine.MapEditor
         public bool AreGameSettingsFilesLoaded()
         {
             return BundleManipulator.IsBundleLoaded(FileConstants.GameSettingsBundleKey);
+        }
+
+        public void InsertNewMapInfo(int idToClone, int newZoneId, int newAreaId, long newZoneGrid, long newAttributeMatrix, long newAttributeMatrixEx)
+        {
+            MapInfoFile mapInfo = GetMapInfoFile();
+
+            ZoneData zoneData = new ZoneData(mapInfo.ZoneData[idToClone]);
+            zoneData.ZoneID = newZoneId;
+            zoneData.AreaID = newAreaId;
+            zoneData.ZoneGridPathID = newZoneGrid;
+            zoneData.AttributePathID = newAttributeMatrix;
+            zoneData.AttributeExPathID = newAttributeMatrixEx;
+
+            Camera camera = new Camera(mapInfo.Camera[idToClone]);
+            camera.AreaID = newAreaId;
+            
+            mapInfo.ZoneData.Add(zoneData);
+            mapInfo.Camera.Add(camera);
+            SetMapInfoFile(mapInfo);
         }
 
         private bool LoadMasterDatasFiles()
@@ -154,6 +196,10 @@ namespace BDSPMapInserter.Engine.MapEditor
                         else if (file.Value["Attributes"].GetChildrenCount() > 0)
                         {
                             attributeFiles.Add(ConvertToAttributeFile(file.Key, file.Value));
+                        }
+                        else if (file.Value["AttributeBlocks"].GetChildrenCount() > 0)
+                        {
+                            attributeFiles.Add(ConvertToAttributeMatrixFile(file.Key, file.Value));
                         }
                     }
                 }
@@ -261,6 +307,13 @@ namespace BDSPMapInserter.Engine.MapEditor
             string name = root["m_Name"].GetValue().AsString();
             int width = root["Width"].GetValue().AsInt();
             return new AttributeFile(root["Attributes"][0].GetChildrenList().Select(b => b.GetValue().AsInt64()).ToList(), width, name, pathId);
+        }
+
+        private AttributeFile ConvertToAttributeMatrixFile(long pathId, AssetTypeValueField root)
+        {
+            string name = root["m_Name"].GetValue().AsString();
+            int width = root["Width"].GetValue().AsInt();
+            return new AttributeFile(root["AttributeBlocks"][0].GetChildrenList().Select(b => b["m_PathID"].GetValue().AsInt64()).ToList(), width, name, pathId);
         }
 
         private List<JObject> ConvertFromMasterDatasFiles(List<MasterDatasFile> masterdatasFiles)
@@ -427,6 +480,32 @@ namespace BDSPMapInserter.Engine.MapEditor
                         )
                     ),
                     new JProperty("Width", attributeFile.Width)
+                ));
+            }
+
+            return json;
+        }
+
+        private List<JObject> ConvertFromAttributeMatrixFiles(List<AttributeMatrixFile> attributeMatrixFiles)
+        {
+            List<JObject> json = new List<JObject>();
+
+            foreach (AttributeMatrixFile attributeMatrixFile in attributeMatrixFiles)
+            {
+                json.Add(new JObject(
+                    new JProperty("PathID", attributeMatrixFile.PathID),
+                    new JProperty("ClassID", 8),
+                    new JProperty("FileName", attributeMatrixFile.FileName),
+                    new JProperty("AttributeBlocks",
+                        new JArray(
+                            from p in attributeMatrixFile.AttributePathIDs
+                            select new JObject(
+                                new JProperty("m_FileID", 0),
+                                new JProperty("m_PathID", p)
+                            )
+                        )
+                    ),
+                    new JProperty("Width", attributeMatrixFile.Width)
                 ));
             }
 

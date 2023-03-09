@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BDSPMapInserter.Engine.MessageEditor.Model;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -62,6 +63,49 @@ namespace BDSPMapInserter.Engine.MapEditor.Model
             public float GetY() { return y; }
             public float GetZ() { return z; }
             public float GetW() { return w; }
+        }
+
+        public ZoneData(){}
+
+        public ZoneData(ZoneData zoneData)
+        {
+            Caption = zoneData.Caption;
+            MSLabel = zoneData.MSLabel;
+            PokePlaceName = zoneData.PokePlaceName;
+            FlyingPlaceName = zoneData.FlyingPlaceName;
+            MapType = zoneData.MapType;
+            IsField = zoneData.IsField;
+            LandmarkType = zoneData.LandmarkType;
+            MiniMapOffset = new PointF
+            (
+                zoneData.MiniMapOffset.X,
+                zoneData.MiniMapOffset.Y
+            );
+            Bicycle = zoneData.Bicycle;
+            Escape = zoneData.Escape;
+            Fly = zoneData.Fly;
+            BattleSearcher = zoneData.BattleSearcher;
+            TureAruki = zoneData.TureAruki;
+            KuruKuru = zoneData.KuruKuru;
+            Fall = zoneData.Fall;
+            BattleBg = new List<int>(zoneData.BattleBg);
+            ZoneID = zoneData.ZoneID;
+            AreaID = zoneData.AreaID;
+            ZoneGridPathID = zoneData.ZoneGridPathID;
+            AttributePathID = zoneData.AttributePathID;
+            AttributeExPathID = zoneData.AttributeExPathID;
+            SubAttributePathID = zoneData.SubAttributePathID;
+            SubAttributeExPathID = zoneData.SubAttributeExPathID;
+            BGM = new List<string>(zoneData.BGM);
+            EnvironmentalSound = zoneData.EnvironmentalSound;
+            Weather = zoneData.Weather;
+            RenderSettingsPathID = zoneData.RenderSettingsPathID;
+            ReflectionCamera = zoneData.ReflectionCamera;
+            FixedTime = zoneData.FixedTime;
+            AssetBundleName = zoneData.AssetBundleName;
+            RoomPanCamera = zoneData.RoomPanCamera;
+            Locators = new List<Locator>(zoneData.Locators);
+            Reload = zoneData.Reload;
         }
     }
 }

@@ -6,6 +6,7 @@ using BDSPMapInserter.Engine.MessageEditor;
 using BDSPMapInserter.Engine.MessageEditor.Model;
 using BDSPMapInserter.Engine.ScriptEditor;
 using BDSPMapInserter.Engine.ScriptEditor.Model;
+using BDSPMapInserter.UI.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,12 +50,17 @@ namespace BDSPMapInserter.Engine
             return mapInfo.ZoneData.Max(z => z.AreaID) + 1;
         }
 
-        public List<string> GetClonableMapInfoData()
+        public List<ClonableMapInfoData> GetClonableMapInfoData()
         {
             MapInfoFile mapInfo = mapEditor.GetMapInfoFile();
             List<MessageFile> messageFiles = messageEditor.GetMessageFiles()[FileConstants.MessageEnglishBundleKey];
             MessageFile messageFile = messageFiles.Where(f => f.FileName == "english_dp_fld_areaname").First();
-            return mapInfo.ZoneData.Select(z => string.Format("{0} ({1})", messageFile.Labels.Where(l => l.Name == z.PokePlaceName).First().Words[0].Data, z.ZoneID)).ToList();
+            return mapInfo.ZoneData.Select(z => new ClonableMapInfoData(z.ZoneID, messageFile.Labels.Where(l => l.Name == z.PokePlaceName).First().Words[0].Data)).ToList();
+        }
+
+        public void InsertNewMapInfo(int idToClone, int newZoneId, int newAreaId, long newZoneGrid, long newAttributeMatrix, long newAttributeMatrixEx)
+        {
+            mapEditor.InsertNewMapInfo(idToClone, newZoneId, newAreaId, newZoneGrid, newAttributeMatrix, newAttributeMatrixEx);
         }
     }
 }

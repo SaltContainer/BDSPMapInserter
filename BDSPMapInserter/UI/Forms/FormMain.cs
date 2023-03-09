@@ -1,5 +1,6 @@
 ﻿using BDSPMapInserter.Engine;
 using BDSPMapInserter.Properties;
+using BDSPMapInserter.UI.Model;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 namespace BDSPMapInserter.UI.Forms
 {
@@ -99,7 +99,12 @@ namespace BDSPMapInserter.UI.Forms
             else if (txtAreaName2.Text == "") MessageBox.Show("The Area Name (Display) is empty.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             else if (txtAreaName3.Text == "") MessageBox.Show("The Area Name (Indirect) is empty.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             else if (txtAreaName4.Text == "") MessageBox.Show("The Area Name (Town Map) is empty.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            else MessageBox.Show("Not yet implemented.", "WIP", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            else
+            {
+                ClonableMapInfoData clonableMapInfo = (ClonableMapInfoData)comboMapInfo.SelectedItem;
+                engine.InsertNewMapInfo(clonableMapInfo.ZoneID, engine.GetNextZoneID(), (int)numAreaID.Value, 3827560303091868358, -5767685015742308502, -2815371549301195827);
+                MessageBox.Show("Not yet implemented.", "WIP", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
     }
 }
