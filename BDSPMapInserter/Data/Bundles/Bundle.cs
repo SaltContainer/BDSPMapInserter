@@ -20,6 +20,7 @@ namespace BDSPMapInserter.Data
         protected BundleFileInstance bundle;
         protected AssetsFileInstance assetsFile;
         protected byte[] newData;
+        protected long nextPathId;
 
         public Bundle(AssetsManager assetsManager, BundleFileInstance bundle, string bundleKey)
         {
@@ -30,6 +31,8 @@ namespace BDSPMapInserter.Data
             assetsFile = assetsManager.LoadAssetsFileFromBundle(bundle, FileConstants.Bundles[bundleKey].CabDirectory);
             if (!assetsFile.file.typeTree.hasTypeTree)
                 assetsManager.LoadClassDatabaseFromPackage(assetsFile.file.typeTree.unityVersion);
+            
+            this.nextPathId = assetsFile.table.assetFileInfo.Max(info => info.index) + 1;
         }
 
         public AssetTypeValueField GetFileInBundle(string fileName)
@@ -43,14 +46,14 @@ namespace BDSPMapInserter.Data
             ReplaceInBundle(replacers);
         }
 
-        public void AddAsset(int typeId, ushort classId, JObject data, string container)
+        public long AddAsset(int typeId, ushort classId, JObject data, string container)
         {
             AssetTypeTemplateField tempField = new AssetTypeTemplateField();
             byte[] assetBytes;
 
             if (assetsFile.file.typeTree.hasTypeTree)
             {
-                var ttType = AssetHelper.FindTypeTreeTypeByID(assetsFile.file.typeTree, classId);
+                var ttType = AssetHelper.FindTypeTreeTypeByID(assetsFile.file.typeTree, 114, classId);
                 tempField.From0D(ttType, 0);
             }
             else
@@ -62,18 +65,20 @@ namespace BDSPMapInserter.Data
             assetBytes = baseField.WriteToByteArray();
             long pathId = GetNextPathID();
             AssetsReplacer replacer = new AssetsReplacerFromMemory(0, pathId, typeId, classId, assetBytes);
-            ReplaceInBundle(new List<AssetsReplacer>() { replacer });
+            ReplaceInBundle(new List<AssetsReplacer>() { replacer }); // TODO: New files just do not want to get added for some reason :/
 
             data["PathID"] = pathId;
             data["ClassID"] = classId;
             AssetsReplacer newReplacer = GenerateReplacerAtFile(baseField, data);
-            ReplaceInBundle(new List<AssetsReplacer>() { newReplacer });
+            ReplaceInBundle(new List<AssetsReplacer>() { newReplacer }); // TODO: This also doesn't change anything...
 
             if (container != null && container != "")
             {
                 AssetsReplacer containerReplacer = GenerateFileContainerReplacer(pathId, container);
                 ReplaceInBundle(new List<AssetsReplacer>() { containerReplacer });
             }
+
+            return pathId;
         }
 
         public Dictionary<long, AssetTypeValueField> GetFilesInBundle()
@@ -174,7 +179,7 @@ namespace BDSPMapInserter.Data
 
         private long GetNextPathID()
         {
-            return assetsFile.table.assetFileInfo.Max(info => info.index) + 1;
+            return nextPathId++;
         }
     }
 }

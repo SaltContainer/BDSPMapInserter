@@ -61,7 +61,7 @@ namespace BDSPMapInserter.Data.Bundles
                 baseField["StrList"][0][i].GetValue().Set(jstring.ToString());
             }
 
-            return new AssetsReplacerFromMemory(0, fileInfo.index, (int)fileInfo.curFileType, 0xffff, baseField.WriteToByteArray());
+            return new AssetsReplacerFromMemory(0, jfile["PathID"].Value<long>(), 114, 0, baseField.WriteToByteArray());
         }
     }
 }

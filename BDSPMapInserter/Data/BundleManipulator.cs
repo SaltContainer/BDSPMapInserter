@@ -153,9 +153,9 @@ namespace BDSPMapInserter.Data
             bundles[bundleKey].SetFilesInBundle(files);
         }
 
-        public static void AddNewFileToBundle(string bundleKey, JObject data, int typeId, ushort classId, string container)
+        public static long AddNewFileToBundle(string bundleKey, JObject data, int typeId, ushort classId, string container)
         {
-            bundles[bundleKey].AddAsset(typeId, classId, data, container);
+            return bundles[bundleKey].AddAsset(typeId, classId, data, container);
         }
 
         public static bool SetBasePath(string path)

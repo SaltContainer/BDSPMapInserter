@@ -30,8 +30,6 @@ namespace BDSPMapInserter.Data.Bundles
 
         private AssetsReplacer GenerateMapInfoReplacerAtFile(AssetTypeValueField baseField, JObject jfile)
         {
-            AssetFileInfoEx fileInfo = assetsFile.table.GetAssetInfo(jfile["PathID"].Value<long>());
-
             baseField["m_GameObject"]["m_FileID"].GetValue().Set(0);
             baseField["m_GameObject"]["m_PathID"].GetValue().Set(0);
             baseField["m_Enabled"].GetValue().Set(1);
@@ -141,13 +139,11 @@ namespace BDSPMapInserter.Data.Bundles
                 baseField["Camera"][0][i]["distance"].GetValue().Set(jcamera["distance"].Value<float>());
             }
 
-            return new AssetsReplacerFromMemory(0, fileInfo.index, (int)fileInfo.curFileType, 0xffff, baseField.WriteToByteArray());
+            return new AssetsReplacerFromMemory(0, jfile["PathID"].Value<long>(), 114, 0, baseField.WriteToByteArray());
         }
 
         private AssetsReplacer GenerateAttributeMatrixReplacerAtFile(AssetTypeValueField baseField, JObject jfile)
         {
-            AssetFileInfoEx fileInfo = assetsFile.table.GetAssetInfo(jfile["PathID"].Value<long>());
-
             baseField["m_GameObject"]["m_FileID"].GetValue().Set(0);
             baseField["m_GameObject"]["m_PathID"].GetValue().Set(0);
             baseField["m_Enabled"].GetValue().Set(1);
@@ -162,18 +158,16 @@ namespace BDSPMapInserter.Data.Bundles
             for (int i = 0; i < jAttributeBlocks.Count; i++)
             {
                 JToken jAttributeBlock = jAttributeBlocks[i];
-                baseField["AttributeBlocks"][0][i].GetValue().Set(jAttributeBlock.Value<long>());
+                baseField["AttributeBlocks"][0][i].GetValue().Set(jAttributeBlock["m_PathID"].Value<long>());
             }
 
             baseField["Width"].GetValue().Set(jfile["Width"].Value<int>());
 
-            return new AssetsReplacerFromMemory(0, fileInfo.index, (int)fileInfo.curFileType, 0xffff, baseField.WriteToByteArray());
+            return new AssetsReplacerFromMemory(0, jfile["PathID"].Value<long>(), 114, 11, baseField.WriteToByteArray());
         }
 
         private AssetsReplacer GenerateAttributeReplacerAtFile(AssetTypeValueField baseField, JObject jfile)
         {
-            AssetFileInfoEx fileInfo = assetsFile.table.GetAssetInfo(jfile["PathID"].Value<long>());
-
             baseField["m_GameObject"]["m_FileID"].GetValue().Set(0);
             baseField["m_GameObject"]["m_PathID"].GetValue().Set(0);
             baseField["m_Enabled"].GetValue().Set(1);
@@ -193,7 +187,7 @@ namespace BDSPMapInserter.Data.Bundles
 
             baseField["Width"].GetValue().Set(jfile["Width"].Value<int>());
 
-            return new AssetsReplacerFromMemory(0, fileInfo.index, (int)fileInfo.curFileType, 0xffff, baseField.WriteToByteArray());
+            return new AssetsReplacerFromMemory(0, jfile["PathID"].Value<long>(), 114, 8, baseField.WriteToByteArray());
         }
     }
 }

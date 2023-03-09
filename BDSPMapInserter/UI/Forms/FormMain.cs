@@ -106,6 +106,7 @@ namespace BDSPMapInserter.UI.Forms
             ClonableMapInfoData clonableMapInfo = (ClonableMapInfoData)comboMapInfo.SelectedItem;
             InputData inputData = new InputData()
             {
+                ZoneID = engine.GetNextZoneID(),
                 AreaID = (int)numAreaID.Value,
                 ZoneCode = txtZoneCode.Text,
                 AreaCode = txtAreaCode.Text,

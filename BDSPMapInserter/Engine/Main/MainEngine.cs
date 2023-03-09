@@ -69,16 +69,8 @@ namespace BDSPMapInserter.Engine.Main
 
         public void InsertNewMapInfo(InputData inputData)
         {
-            // TODO: Propagate InputData to MapEditor?
-            if (inputData.IsSinnoh)
-            {
-                mapEditor.InsertNewMapInfo(inputData.MapInfoCloneZoneID, GetNextZoneID(), inputData.AreaID, 3827560303091868358, -5767685015742308502, -2815371549301195827);
-            }
-            else
-            {
-                // TODO: Make new Attribute Files
-                mapEditor.InsertNewMapInfo(inputData.MapInfoCloneZoneID, GetNextZoneID(), inputData.AreaID, 0, -5767685015742308502, -2815371549301195827);
-            }
+            mapEditor.InsertNewMapInfo(inputData);
+            mapEditor.SaveMapFilesInBasePath();
         }
     }
 }

@@ -8,6 +8,7 @@ namespace BDSPMapInserter.Engine.Main.Model
 {
     internal class InputData
     {
+        public int ZoneID { get; set; }
         public int AreaID { get; set; }
         public string ZoneCode { get; set; }
         public string AreaCode { get; set; }

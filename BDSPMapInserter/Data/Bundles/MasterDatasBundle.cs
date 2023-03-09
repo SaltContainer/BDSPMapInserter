@@ -15,8 +15,6 @@ namespace BDSPMapInserter.Data.Bundles
 
         protected override AssetsReplacer GenerateReplacerAtFile(AssetTypeValueField baseField, JObject jfile)
         {
-            AssetFileInfoEx fileInfo = assetsFile.table.GetAssetInfo(jfile["PathID"].Value<long>());
-
             baseField["m_GameObject"]["m_FileID"].GetValue().Set(0);
             baseField["m_GameObject"]["m_PathID"].GetValue().Set(0);
             baseField["m_Enabled"].GetValue().Set(1);
@@ -44,7 +42,7 @@ namespace BDSPMapInserter.Data.Bundles
             var dataArray = baseField["Data"]["Array"];
             AdjustArrayLength(jdatas, dataArray);
 
-            return new AssetsReplacerFromMemory(0, fileInfo.index, (int)fileInfo.curFileType, 0xffff, baseField.WriteToByteArray());
+            return new AssetsReplacerFromMemory(0, jfile["PathID"].Value<long>(), 114, jfile["ClassID"].Value<ushort>(), baseField.WriteToByteArray());
         }
     }
 }

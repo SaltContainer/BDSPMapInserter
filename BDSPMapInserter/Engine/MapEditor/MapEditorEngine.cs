@@ -11,6 +11,7 @@ using BDSPMapInserter.Engine.MapEditor.Model;
 using AssetsTools.NET.Extra;
 using System.Drawing;
 using static BDSPMapInserter.Engine.MapEditor.Model.ZoneData;
+using BDSPMapInserter.Engine.Main.Model;
 
 namespace BDSPMapInserter.Engine.MapEditor
 {
@@ -140,23 +141,58 @@ namespace BDSPMapInserter.Engine.MapEditor
             return BundleManipulator.IsBundleLoaded(FileConstants.GameSettingsBundleKey);
         }
 
-        public void InsertNewMapInfo(int idToClone, int newZoneId, int newAreaId, long newZoneGrid, long newAttributeMatrix, long newAttributeMatrixEx)
+        public void InsertNewMapInfo(InputData inputData)
         {
             MapInfoFile mapInfo = GetMapInfoFile();
 
-            ZoneData zoneData = new ZoneData(mapInfo.ZoneData[idToClone]);
-            zoneData.ZoneID = newZoneId;
-            zoneData.AreaID = newAreaId;
-            zoneData.ZoneGridPathID = newZoneGrid;
-            zoneData.AttributePathID = newAttributeMatrix;
-            zoneData.AttributeExPathID = newAttributeMatrixEx;
+            ZoneData zoneData = new ZoneData(mapInfo.ZoneData[inputData.MapInfoCloneZoneID]);
+            zoneData.ZoneID = inputData.ZoneID;
+            zoneData.AreaID = inputData.AreaID;
 
-            Camera camera = new Camera(mapInfo.Camera[idToClone]);
-            camera.AreaID = newAreaId;
+            Camera camera = new Camera(mapInfo.Camera[inputData.MapInfoCloneZoneID]);
+            camera.AreaID = inputData.AreaID;
+
+            List<long> attributePathIds = new List<long>();
+            List<long> attributeExPathIds = new List<long>();
+            for (int i=0; i<(inputData.MapWidth*inputData.MapHeight); i++)
+            {
+                attributePathIds.Add(InsertNewAttributeFile(string.Format("{0}_{1}", inputData.ZoneCode, i), 128));
+                attributeExPathIds.Add(InsertNewAttributeFile(string.Format("{0}_{1}_Ex", inputData.ZoneCode, i), 100000000));
+            }
+
+            if (inputData.IsSinnoh)
+            {
+                zoneData.ZoneGridPathID = 3827560303091868358;
+                zoneData.AttributePathID = -5767685015742308502;
+                zoneData.AttributeExPathID = -2815371549301195827;
+            }
+            else
+            {
+                zoneData.ZoneGridPathID = 0;
+                zoneData.AttributePathID = InsertNewAttributeMatrixFiles(string.Format("{0}_Blocks", inputData.ZoneCode), attributePathIds, inputData.MapWidth);
+                zoneData.AttributeExPathID = InsertNewAttributeMatrixFiles(string.Format("{0}_Blocks_Ex", inputData.ZoneCode), attributeExPathIds, inputData.MapWidth);
+            }
             
             mapInfo.ZoneData.Add(zoneData);
             mapInfo.Camera.Add(camera);
             SetMapInfoFile(mapInfo);
+            SetMasterDatasFiles(GetMasterDatasFiles());
+        }
+
+        public long InsertNewAttributeMatrixFiles(string fileName, List<long> attributePathIds, int width)
+        {
+            AttributeMatrixFile matrixFile = new AttributeMatrixFile(attributePathIds, width, fileName, 0);
+            long pathId = BundleManipulator.AddNewFileToBundle(FileConstants.GameSettingsBundleKey, ConvertFromAttributeMatrixFiles(new List<AttributeMatrixFile>() { matrixFile })[0], 114, 8, "");
+
+            return pathId;
+        }
+
+        public long InsertNewAttributeFile(string fileName, long defaultValue)
+        {
+            AttributeFile attributeFile = new AttributeFile(Enumerable.Repeat(defaultValue, 1024).ToList(), 32, fileName, 0);
+            long pathId = BundleManipulator.AddNewFileToBundle(FileConstants.GameSettingsBundleKey, ConvertFromAttributeFiles(new List<AttributeFile>() { attributeFile })[0], 114, 11, "");
+
+            return pathId;
         }
 
         private bool LoadMasterDatasFiles()
