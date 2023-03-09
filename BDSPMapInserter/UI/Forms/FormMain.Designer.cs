@@ -50,13 +50,22 @@
             this.txtAreaCode = new System.Windows.Forms.TextBox();
             this.ttMain = new System.Windows.Forms.ToolTip(this.components);
             this.lbZoneID = new System.Windows.Forms.Label();
+            this.checkSinnoh = new System.Windows.Forms.CheckBox();
+            this.lbSinnoh = new System.Windows.Forms.Label();
+            this.numMapWidth = new System.Windows.Forms.NumericUpDown();
+            this.numMapHeight = new System.Windows.Forms.NumericUpDown();
+            this.lbMapSize = new System.Windows.Forms.Label();
+            this.lbMapWidth = new System.Windows.Forms.Label();
+            this.lbMapHeight = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.numAreaID)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numMapWidth)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numMapHeight)).BeginInit();
             this.SuspendLayout();
             // 
             // btnOpen
             // 
             this.btnOpen.Image = global::BDSPMapInserter.Properties.Resources.folder;
-            this.btnOpen.Location = new System.Drawing.Point(25, 263);
+            this.btnOpen.Location = new System.Drawing.Point(25, 327);
             this.btnOpen.Name = "btnOpen";
             this.btnOpen.Size = new System.Drawing.Size(48, 46);
             this.btnOpen.TabIndex = 0;
@@ -68,7 +77,7 @@
             this.btnExecute.Enabled = false;
             this.btnExecute.Image = global::BDSPMapInserter.Properties.Resources.save;
             this.btnExecute.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnExecute.Location = new System.Drawing.Point(79, 263);
+            this.btnExecute.Location = new System.Drawing.Point(79, 327);
             this.btnExecute.Name = "btnExecute";
             this.btnExecute.Size = new System.Drawing.Size(225, 46);
             this.btnExecute.TabIndex = 1;
@@ -109,7 +118,7 @@
             // txtAreaName1
             // 
             this.txtAreaName1.Enabled = false;
-            this.txtAreaName1.Location = new System.Drawing.Point(151, 149);
+            this.txtAreaName1.Location = new System.Drawing.Point(151, 221);
             this.txtAreaName1.Name = "txtAreaName1";
             this.txtAreaName1.Size = new System.Drawing.Size(153, 20);
             this.txtAreaName1.TabIndex = 5;
@@ -117,7 +126,7 @@
             // txtAreaName2
             // 
             this.txtAreaName2.Enabled = false;
-            this.txtAreaName2.Location = new System.Drawing.Point(151, 175);
+            this.txtAreaName2.Location = new System.Drawing.Point(151, 247);
             this.txtAreaName2.Name = "txtAreaName2";
             this.txtAreaName2.Size = new System.Drawing.Size(153, 20);
             this.txtAreaName2.TabIndex = 6;
@@ -125,7 +134,7 @@
             // txtAreaName3
             // 
             this.txtAreaName3.Enabled = false;
-            this.txtAreaName3.Location = new System.Drawing.Point(151, 201);
+            this.txtAreaName3.Location = new System.Drawing.Point(151, 273);
             this.txtAreaName3.Name = "txtAreaName3";
             this.txtAreaName3.Size = new System.Drawing.Size(153, 20);
             this.txtAreaName3.TabIndex = 7;
@@ -133,7 +142,7 @@
             // txtAreaName4
             // 
             this.txtAreaName4.Enabled = false;
-            this.txtAreaName4.Location = new System.Drawing.Point(151, 227);
+            this.txtAreaName4.Location = new System.Drawing.Point(151, 299);
             this.txtAreaName4.Name = "txtAreaName4";
             this.txtAreaName4.Size = new System.Drawing.Size(153, 20);
             this.txtAreaName4.TabIndex = 8;
@@ -158,7 +167,7 @@
             // lbAreaName1
             // 
             this.lbAreaName1.AutoSize = true;
-            this.lbAreaName1.Location = new System.Drawing.Point(82, 152);
+            this.lbAreaName1.Location = new System.Drawing.Point(82, 224);
             this.lbAreaName1.Name = "lbAreaName1";
             this.lbAreaName1.Size = new System.Drawing.Size(63, 13);
             this.lbAreaName1.TabIndex = 11;
@@ -167,7 +176,7 @@
             // lbAreaName2
             // 
             this.lbAreaName2.AutoSize = true;
-            this.lbAreaName2.Location = new System.Drawing.Point(39, 178);
+            this.lbAreaName2.Location = new System.Drawing.Point(39, 250);
             this.lbAreaName2.Name = "lbAreaName2";
             this.lbAreaName2.Size = new System.Drawing.Size(106, 13);
             this.lbAreaName2.TabIndex = 12;
@@ -176,7 +185,7 @@
             // lbAreaName3
             // 
             this.lbAreaName3.AutoSize = true;
-            this.lbAreaName3.Location = new System.Drawing.Point(38, 204);
+            this.lbAreaName3.Location = new System.Drawing.Point(38, 276);
             this.lbAreaName3.Name = "lbAreaName3";
             this.lbAreaName3.Size = new System.Drawing.Size(107, 13);
             this.lbAreaName3.TabIndex = 13;
@@ -185,7 +194,7 @@
             // lbAreaName4
             // 
             this.lbAreaName4.AutoSize = true;
-            this.lbAreaName4.Location = new System.Drawing.Point(22, 230);
+            this.lbAreaName4.Location = new System.Drawing.Point(22, 302);
             this.lbAreaName4.Name = "lbAreaName4";
             this.lbAreaName4.Size = new System.Drawing.Size(123, 13);
             this.lbAreaName4.TabIndex = 14;
@@ -244,13 +253,111 @@
             this.lbZoneID.TabIndex = 19;
             this.lbZoneID.Text = "Zone ID:";
             // 
+            // checkSinnoh
+            // 
+            this.checkSinnoh.AutoSize = true;
+            this.checkSinnoh.Location = new System.Drawing.Point(151, 149);
+            this.checkSinnoh.Name = "checkSinnoh";
+            this.checkSinnoh.Size = new System.Drawing.Size(15, 14);
+            this.checkSinnoh.TabIndex = 20;
+            this.checkSinnoh.UseVisualStyleBackColor = true;
+            // 
+            // lbSinnoh
+            // 
+            this.lbSinnoh.AutoSize = true;
+            this.lbSinnoh.Location = new System.Drawing.Point(102, 150);
+            this.lbSinnoh.Name = "lbSinnoh";
+            this.lbSinnoh.Size = new System.Drawing.Size(43, 13);
+            this.lbSinnoh.TabIndex = 21;
+            this.lbSinnoh.Text = "Sinnoh:";
+            // 
+            // numMapWidth
+            // 
+            this.numMapWidth.Enabled = false;
+            this.numMapWidth.Location = new System.Drawing.Point(202, 169);
+            this.numMapWidth.Maximum = new decimal(new int[] {
+            30,
+            0,
+            0,
+            0});
+            this.numMapWidth.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numMapWidth.Name = "numMapWidth";
+            this.numMapWidth.Size = new System.Drawing.Size(61, 20);
+            this.numMapWidth.TabIndex = 22;
+            this.numMapWidth.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // numMapHeight
+            // 
+            this.numMapHeight.Enabled = false;
+            this.numMapHeight.Location = new System.Drawing.Point(202, 195);
+            this.numMapHeight.Maximum = new decimal(new int[] {
+            30,
+            0,
+            0,
+            0});
+            this.numMapHeight.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numMapHeight.Name = "numMapHeight";
+            this.numMapHeight.Size = new System.Drawing.Size(61, 20);
+            this.numMapHeight.TabIndex = 23;
+            this.numMapHeight.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // lbMapSize
+            // 
+            this.lbMapSize.AutoSize = true;
+            this.lbMapSize.Location = new System.Drawing.Point(91, 171);
+            this.lbMapSize.Name = "lbMapSize";
+            this.lbMapSize.Size = new System.Drawing.Size(54, 13);
+            this.lbMapSize.TabIndex = 24;
+            this.lbMapSize.Text = "Map Size:";
+            // 
+            // lbMapWidth
+            // 
+            this.lbMapWidth.AutoSize = true;
+            this.lbMapWidth.Location = new System.Drawing.Point(155, 171);
+            this.lbMapWidth.Name = "lbMapWidth";
+            this.lbMapWidth.Size = new System.Drawing.Size(38, 13);
+            this.lbMapWidth.TabIndex = 25;
+            this.lbMapWidth.Text = "Width:";
+            // 
+            // lbMapHeight
+            // 
+            this.lbMapHeight.AutoSize = true;
+            this.lbMapHeight.Location = new System.Drawing.Point(155, 197);
+            this.lbMapHeight.Name = "lbMapHeight";
+            this.lbMapHeight.Size = new System.Drawing.Size(41, 13);
+            this.lbMapHeight.TabIndex = 26;
+            this.lbMapHeight.Text = "Height:";
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(322, 324);
-            this.Controls.Add(this.txtAreaCode);
+            this.ClientSize = new System.Drawing.Size(322, 385);
+            this.Controls.Add(this.lbMapSize);
+            this.Controls.Add(this.lbMapHeight);
+            this.Controls.Add(this.numMapHeight);
+            this.Controls.Add(this.lbMapWidth);
+            this.Controls.Add(this.numMapWidth);
+            this.Controls.Add(this.lbSinnoh);
+            this.Controls.Add(this.checkSinnoh);
             this.Controls.Add(this.lbAreaCode);
+            this.Controls.Add(this.txtAreaCode);
             this.Controls.Add(this.lbMapInfo);
             this.Controls.Add(this.comboMapInfo);
             this.Controls.Add(this.lbZoneCode);
@@ -271,11 +378,12 @@
             this.Controls.Add(this.btnOpen);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(338, 363);
             this.MinimumSize = new System.Drawing.Size(338, 363);
             this.Name = "FormMain";
             this.Text = "BDSP Map Inserter";
             ((System.ComponentModel.ISupportInitialize)(this.numAreaID)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numMapWidth)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numMapHeight)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -304,6 +412,13 @@
         private System.Windows.Forms.TextBox txtAreaCode;
         private System.Windows.Forms.ToolTip ttMain;
         private System.Windows.Forms.Label lbZoneID;
+        private System.Windows.Forms.CheckBox checkSinnoh;
+        private System.Windows.Forms.Label lbSinnoh;
+        private System.Windows.Forms.NumericUpDown numMapWidth;
+        private System.Windows.Forms.NumericUpDown numMapHeight;
+        private System.Windows.Forms.Label lbMapSize;
+        private System.Windows.Forms.Label lbMapWidth;
+        private System.Windows.Forms.Label lbMapHeight;
     }
 }
 

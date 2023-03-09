@@ -1,28 +1,32 @@
 ﻿using BDSPMapInserter.Data;
 using BDSPMapInserter.Data.Utils;
+using BDSPMapInserter.Engine.Main.Model;
 using BDSPMapInserter.Engine.MapEditor;
 using BDSPMapInserter.Engine.MapEditor.Model;
 using BDSPMapInserter.Engine.MessageEditor;
 using BDSPMapInserter.Engine.MessageEditor.Model;
 using BDSPMapInserter.Engine.ScriptEditor;
 using BDSPMapInserter.Engine.ScriptEditor.Model;
-using BDSPMapInserter.UI.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BDSPMapInserter.Engine
+namespace BDSPMapInserter.Engine.Main
 {
     internal class MainEngine
     {
+        private InputValidator inputValidator;
+
         private MapEditorEngine mapEditor;
         private MessageEditorEngine messageEditor;
         private ScriptEditorEngine scriptEditor;
 
         public MainEngine()
         {
+            inputValidator = new InputValidator();
+
             mapEditor = new MapEditorEngine();
             messageEditor = new MessageEditorEngine();
             scriptEditor = new ScriptEditorEngine();
@@ -58,9 +62,23 @@ namespace BDSPMapInserter.Engine
             return mapInfo.ZoneData.Select(z => new ClonableMapInfoData(z.ZoneID, messageFile.Labels.Where(l => l.Name == z.PokePlaceName).First().Words[0].Data)).ToList();
         }
 
-        public void InsertNewMapInfo(int idToClone, int newZoneId, int newAreaId, long newZoneGrid, long newAttributeMatrix, long newAttributeMatrixEx)
+        public List<string> ValidateInput(InputData inputData)
         {
-            mapEditor.InsertNewMapInfo(idToClone, newZoneId, newAreaId, newZoneGrid, newAttributeMatrix, newAttributeMatrixEx);
+            return inputValidator.ValidateInput(inputData);
+        }
+
+        public void InsertNewMapInfo(InputData inputData)
+        {
+            // TODO: Propagate InputData to MapEditor?
+            if (inputData.IsSinnoh)
+            {
+                mapEditor.InsertNewMapInfo(inputData.MapInfoCloneZoneID, GetNextZoneID(), inputData.AreaID, 3827560303091868358, -5767685015742308502, -2815371549301195827);
+            }
+            else
+            {
+                // TODO: Make new Attribute Files
+                mapEditor.InsertNewMapInfo(inputData.MapInfoCloneZoneID, GetNextZoneID(), inputData.AreaID, 0, -5767685015742308502, -2815371549301195827);
+            }
         }
     }
 }

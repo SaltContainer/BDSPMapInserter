@@ -1,6 +1,6 @@
-﻿using BDSPMapInserter.Engine;
+﻿using BDSPMapInserter.Engine.Main;
+using BDSPMapInserter.Engine.Main.Model;
 using BDSPMapInserter.Properties;
-using BDSPMapInserter.UI.Model;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using System;
 using System.Collections.Generic;
@@ -39,6 +39,13 @@ namespace BDSPMapInserter.UI.Forms
             ttMain.SetToolTip(txtAreaCode, "The \"Area Code\" that will be given to the new map.\nThis will be used for the names of mapwarp, placedata, and stopdata files.");
             ttMain.SetToolTip(lbMapInfo, "The map from which to copy the MapInfo data from.\nCopies both the ZoneData and the Camera data.");
             ttMain.SetToolTip(comboMapInfo, "The map from which to copy the MapInfo data from.\nCopies both the ZoneData and the Camera data.");
+            ttMain.SetToolTip(lbSinnoh, "Check if you plan to use this map in the Sinnoh Matrix.\nThis skips the creation of Attribute Matrix files.");
+            ttMain.SetToolTip(checkSinnoh, "Check if you plan to use this map in the Sinnoh Matrix.\nThis skips the creation of Attribute Matrix files.");
+            ttMain.SetToolTip(lbMapSize, "The size of the new map, in 32-tile chunks.");
+            ttMain.SetToolTip(lbMapWidth, "The width of the new map, in 32-tile chunks.");
+            ttMain.SetToolTip(numMapWidth, "The width of the new map, in 32-tile chunks.");
+            ttMain.SetToolTip(lbMapHeight, "The height of the new map, in 32-tile chunks.");
+            ttMain.SetToolTip(numMapHeight, "The height of the new map, in 32-tile chunks.");
             ttMain.SetToolTip(lbAreaName1, "The user-friendly name of the area.");
             ttMain.SetToolTip(txtAreaName1, "The user-friendly name of the area.");
             ttMain.SetToolTip(lbAreaName2, "The user-friendly name of the area (Displayed when entering?).");
@@ -59,6 +66,9 @@ namespace BDSPMapInserter.UI.Forms
             txtZoneCode.Enabled = true;
             txtAreaCode.Enabled = true;
             comboMapInfo.Enabled = true;
+            checkSinnoh.Enabled = true;
+            numMapWidth.Enabled = true;
+            numMapHeight.Enabled = true;
             txtAreaName1.Enabled = true;
             txtAreaName2.Enabled = true;
             txtAreaName3.Enabled = true;
@@ -93,16 +103,30 @@ namespace BDSPMapInserter.UI.Forms
 
         private void btnExecute_Click(object sender, EventArgs e)
         {
-            if (txtZoneCode.Text == "") MessageBox.Show("The Zone Code is empty.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            else if (txtAreaCode.Text == "") MessageBox.Show("The Area Code is empty.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            else if (txtAreaName1.Text == "") MessageBox.Show("The Area Name is empty.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            else if (txtAreaName2.Text == "") MessageBox.Show("The Area Name (Display) is empty.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            else if (txtAreaName3.Text == "") MessageBox.Show("The Area Name (Indirect) is empty.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            else if (txtAreaName4.Text == "") MessageBox.Show("The Area Name (Town Map) is empty.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            ClonableMapInfoData clonableMapInfo = (ClonableMapInfoData)comboMapInfo.SelectedItem;
+            InputData inputData = new InputData()
+            {
+                AreaID = (int)numAreaID.Value,
+                ZoneCode = txtZoneCode.Text,
+                AreaCode = txtAreaCode.Text,
+                MapInfoCloneZoneID = clonableMapInfo.ZoneID,
+                IsSinnoh = checkSinnoh.Checked,
+                MapWidth = (int)numMapWidth.Value,
+                MapHeight = (int)numMapHeight.Value,
+                AreaName = txtAreaName1.Text,
+                AreaNameDisplay = txtAreaName2.Text,
+                AreaNameIndirect = txtAreaName3.Text,
+                AreaNameTownMap = txtAreaName4.Text
+            };
+            List<string> errors = engine.ValidateInput(inputData);
+            if (errors.Count > 0)
+            {
+                string fullError = string.Join("\n", errors);
+                MessageBox.Show(fullError, "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
             else
             {
-                ClonableMapInfoData clonableMapInfo = (ClonableMapInfoData)comboMapInfo.SelectedItem;
-                engine.InsertNewMapInfo(clonableMapInfo.ZoneID, engine.GetNextZoneID(), (int)numAreaID.Value, 3827560303091868358, -5767685015742308502, -2815371549301195827);
+                engine.InsertNewMapInfo(inputData);
                 MessageBox.Show("Not yet implemented.", "WIP", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }

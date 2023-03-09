@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BDSPMapInserter.UI.Model
+namespace BDSPMapInserter.Engine.Main.Model
 {
     internal class ClonableMapInfoData
     {
