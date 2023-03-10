@@ -158,7 +158,8 @@ namespace BDSPMapInserter.Data.Bundles
             for (int i = 0; i < jAttributeBlocks.Count; i++)
             {
                 JToken jAttributeBlock = jAttributeBlocks[i];
-                baseField["AttributeBlocks"][0][i].GetValue().Set(jAttributeBlock["m_PathID"].Value<long>());
+                baseField["AttributeBlocks"][0][i]["m_FileID"].GetValue().Set(0);
+                baseField["AttributeBlocks"][0][i]["m_PathID"].GetValue().Set(jAttributeBlock["m_PathID"].Value<long>());
             }
 
             baseField["Width"].GetValue().Set(jfile["Width"].Value<int>());
